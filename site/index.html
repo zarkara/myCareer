@@ -1,0 +1,313 @@
+<title>myCareer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root {
+    --paper:      #f7f6f3;
+    --surface:    #ffffff;
+    --ink:        #16202e;
+    --ink-soft:   #52606f;
+    --ink-faint:  #8b95a1;
+    --navy:       #1f3864;
+    --blue:       #2e74b5;
+    --gold:       #b8801f;
+    --rule:       #ddd8ce;
+    --term-bg:    #131b26;
+    --term-ink:   #cdd6e2;
+    --term-dim:   #6d7b8d;
+    --term-warn:  #d9a441;
+    --term-bad:   #e2705f;
+    --term-ok:    #7fb37a;
+
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:     #101720;
+      --surface:   #18212c;
+      --ink:       #e8eaed;
+      --ink-soft:  #a3aeba;
+      --ink-faint: #6f7c8a;
+      --navy:      #a8c4e8;
+      --blue:      #74a8dd;
+      --gold:      #e0ac4a;
+      --rule:      #2b3644;
+      --term-bg:   #0b1118;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:     #101720;
+    --surface:   #18212c;
+    --ink:       #e8eaed;
+    --ink-soft:  #a3aeba;
+    --ink-faint: #6f7c8a;
+    --navy:      #a8c4e8;
+    --blue:      #74a8dd;
+    --gold:      #e0ac4a;
+    --rule:      #2b3644;
+    --term-bg:   #0b1118;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding-inline: 22px;
+    padding-block: 56px 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 6.2vw, 3rem);
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 14px 0 0;
+  }
+  h1 em { font-style: normal; color: var(--blue); }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-wrap: balance;
+    margin: 0 0 14px;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+
+  p { margin: 0 0 16px; max-width: 62ch; }
+  p:last-child { margin-bottom: 0; }
+  .lede { font-size: 19px; color: var(--ink-soft); margin-top: 20px; }
+  .muted { color: var(--ink-soft); }
+  .small { font-size: 15px; }
+
+  section { display: block; }
+
+  /* The proof block: real output from the real checker. */
+  .terminal {
+    background: var(--term-bg);
+    border-radius: 3px;
+    border-left: 3px solid var(--gold);
+    overflow-x: auto;
+    padding: 20px 22px;
+    margin: 0;
+  }
+  .terminal pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--term-ink);
+    white-space: pre;
+  }
+  .t-dim  { color: var(--term-dim); }
+  .t-warn { color: var(--term-warn); }
+  .t-bad  { color: var(--term-bad); font-weight: 500; }
+  .t-ok   { color: var(--term-ok); }
+  figcaption {
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    margin-top: 10px;
+    font-family: var(--mono);
+  }
+
+  .points { display: flex; flex-direction: column; gap: 22px; }
+  .point { display: grid; grid-template-columns: 1.6rem 1fr; gap: 0 14px; }
+  .point .mark {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--gold);
+    padding-top: 3px;
+  }
+  .point p { margin: 0; font-size: 16px; color: var(--ink-soft); }
+
+  .rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+  .ask {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--navy);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .ask h2 { margin-bottom: 0; }
+
+  .tracks { display: flex; flex-wrap: wrap; gap: 14px; }
+  .track {
+    flex: 1 1 15rem;
+    border-left: 2px solid var(--rule);
+    padding-left: 14px;
+  }
+  .track .dur {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .track p { font-size: 15px; color: var(--ink-soft); margin: 4px 0 0; }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    background: var(--navy);
+    color: var(--paper);
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 2px;
+    transition: background 120ms ease;
+  }
+  :root[data-theme="dark"] .cta,
+  :root:not([data-theme="light"]) .cta { color: #0d131b; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .cta { color: var(--paper); } }
+  .cta:hover { background: var(--blue); }
+  .cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  .req {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--gold);
+    padding-left: 14px;
+  }
+
+  footer {
+    font-size: 14px;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">myCareer &middot; private test</p>
+    <h1>Most people don't have a resume problem.<br><em>They have a recall problem.</em></h1>
+    <p class="lede">Twenty years of work compresses, in memory, into six bullets that could describe anyone. The projects blur, the numbers go missing, and the decision you are proudest of turns into a sentence with no detail in it, because the detail was never written down anywhere.</p>
+  </header>
+
+  <section>
+    <h2>It starts from the other end</h2>
+    <p class="muted">Instead of asking what you achieved, it describes the terrain you were probably standing on and lets you recognise what you actually did there. If you ran a SOC&nbsp;2 program, you almost certainly did ISO&nbsp;27001 control work and never filed it under that name. Recognition is far easier than recall, and a long career is exactly where recall fails worst.</p>
+    <p class="muted">Then it writes the resume, the LinkedIn profile and the executive letters from that record, and refuses to let any document claim more than the record supports.</p>
+  </section>
+
+  <figure style="margin:0">
+    <div class="terminal">
+<pre><span class="t-dim">$ node validate_corpus.js corpus.json documents/*.md</span>
+
+myCareer: 4 claims (3 confirmed, 1 open), 1 corroborated
+<span class="t-warn">warn  W100</span>  prints "$5M" which does not resolve to a
+            confirmed sourceable figure. Confirm or remove.
+<span class="t-warn">warn  W100</span>  prints "3.5" which does not resolve to a
+            confirmed sourceable figure. Confirm or remove.
+<span class="t-bad">ERROR E100</span>  contains rejected claim text:
+            "led an engineering organization of more than
+             one hundred people across four locations"
+
+<span class="t-bad">1 error. Do not render.</span></pre>
+    </div>
+    <figcaption>Real output. Every number in a finished document has to trace back to something you could actually produce a source for.</figcaption>
+  </figure>
+
+  <section>
+    <h2>Three things it does that a resume tool does not</h2>
+    <div class="points">
+      <div class="point">
+        <span class="mark">&mdash;</span>
+        <div>
+          <h3>Nothing it suggests becomes a fact</h3>
+          <p>Every prompt is a candidate until you confirm it in your own words, with a particular it did not hand you: a person, a date, an artifact, an argument. Agreeing with its sentence is not the same as remembering yours.</p>
+        </div>
+      </div>
+      <div class="point">
+        <span class="mark">&mdash;</span>
+        <div>
+          <h3>Three claims, never one</h3>
+          <p>You did it, you scoped it and handed it off, or you enabled a team to do it. Those are different things, and letting one drift into another is how people come apart in a reference check.</p>
+        </div>
+      </div>
+      <div class="point">
+        <span class="mark">&mdash;</span>
+        <div>
+          <h3>A number you cannot source gets left out</h3>
+          <p>Not softened into "significant improvement". Left out, and listed separately so you know what you would need to find to use it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="ask">
+    <h2>I am looking for a handful of testers</h2>
+    <p class="small muted">Two things I want to know more than anything else. Can you make it lie? Part of the test script actively tries, and I would much rather you found the hole than a hiring manager did. And does it surface work you had genuinely forgotten? That is the entire bet.</p>
+
+    <div class="tracks">
+      <div class="track">
+        <span class="dur">20 MINUTES</span>
+        <p>Sample career data. Render the documents, switch targets, then try to make it fabricate.</p>
+      </div>
+      <div class="track">
+        <span class="dur">ABOUT AN HOUR</span>
+        <p>Your own history. Pick one role you have not thought hard about lately.</p>
+      </div>
+    </div>
+
+    <p class="req">One real requirement: Claude, on claude.ai or the desktop app, on a paid plan with code execution turned on. Saying that up front so nobody signs up and then hits a wall.</p>
+
+    <a class="cta" href="FORM_URL_HERE">Put your name down &rarr;</a>
+
+    <p class="small muted">Most useful if you are fifteen-plus years in, across several employers, ideally somewhere with compliance or regulatory weight. That is where memory fails hardest and where the test needs to be hardest.</p>
+  </section>
+
+  <footer>
+    <p class="small">Blunt feedback is more useful than polite. &ldquo;I got bored at step four&rdquo; is a finding.</p>
+    <p class="small"><a href="privacy.html">Privacy</a> &middot; nothing you write leaves your machine unless you send it.</p>
+  </footer>
+
+</div>

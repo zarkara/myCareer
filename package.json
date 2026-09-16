@@ -1,0 +1,23 @@
+{
+  "name": "mycareer",
+  "version": "1.0.0",
+  "description": "Verified career record: recognition-harness interviews, provenance-checked claims, rendered documents.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node ios/Tests/harness/run.js",
+    "test:update": "node ios/Tests/harness/run.js --update",
+    "icon": "node store/make_icon.js",
+    "validate": "node scripts/validate_corpus.js schema/mycareer.example.json",
+    "demo": "node scripts/build_letters.js schema/mycareer.example.json architect_director out && node scripts/docx_text.js --write out/*.docx && node scripts/validate_corpus.js schema/mycareer.example.json out/*.txt"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "docx": "^9.7.1"
+  },
+  "private": true
+}

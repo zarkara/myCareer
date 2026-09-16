@@ -1,0 +1,389 @@
+{
+  "mycareer_version": "0.1",
+
+  "person": {
+    "name": "DANA WHITFIELD, MBA",
+    "credential_suffix": "MBA",
+    "location": "Tampa, FL",
+    "contact": { "email": "dana@example.com", "linkedin": "linkedin.com/in/example" },
+    "education": [
+      { "credential": "MBA", "institution": "Example State University", "year": "2014", "suppress_for": ["ic_staff_engineer"], "verification": { "tier": "T2" } }
+    ]
+  },
+
+  "orgs": [
+    {
+      "id": "org.helix",
+      "name": "Helix Data Systems",
+      "industry": "Data security software",
+      "size": "220 employees at the time",
+      "buyer_types": ["enterprise", "government", "healthcare"],
+      "nameable": true
+    },
+    {
+      "id": "org.sponsor",
+      "name": "Sponsoring federal civilian agency",
+      "public_name": "a federal civilian agency",
+      "buyer_types": ["government"],
+      "nameable": false
+    }
+  ],
+
+  "roles": [
+    {
+      "id": "role.helix.chief_architect",
+      "org_id": "org.helix",
+      "title": "Chief Architect",
+      "title_history": ["Principal Engineer"],
+      "dates": { "start": "2018-11", "end": "2022-07" },
+      "location": "Tampa, FL",
+      "employment_type": "full_time",
+      "scope": { "direct_reports": 6, "matrixed": 14, "total_org": 48, "span": "Discovery platform, classification engine, and the government cloud boundary" },
+      "chapter": "I joined as principal engineer eight months after the company had promised a government edition to two agencies and had no boundary, no control narratives, and no one who had read a NIST baseline end to end. The platform itself was healthy: it scanned petabyte-scale unstructured stores and classified sensitive data in place. What did not exist was any account of how it would survive an assessment. My first year was reconstructing the architecture as a describable system rather than a working one, which meant drawing the boundary honestly, cutting two integrations that could not be defended inside it, and learning to write in the language an assessor reads. The title changed to Chief Architect in the second year, mostly because someone had to be accountable in writing. What this chapter added was the habit of designing for the conversation with the auditor, not only for the load.",
+      "departure_framing": "Left after the platform reached steady-state authorization and the company shifted to a maintenance roadmap.",
+      "verification": {
+        "tier": "T1",
+        "by_fact_type": {
+          "employment.employer": "T4",
+          "employment.dates": "T4",
+          "employment.compensation": "T4",
+          "employment.title": "T1"
+        },
+        "record_ids": ["rec.irs.helix"],
+        "last_reviewed": "2026-09"
+      }
+    }
+  ],
+
+  "systems": [
+    {
+      "id": "sys.helix.discovery",
+      "name": "Discovery and classification platform",
+      "role_ids": ["role.helix.chief_architect"],
+      "purpose": "Scanned petabyte-scale unstructured data stores across customer environments and classified sensitive data in place, without moving it.",
+      "reconstruction": "Agent-based scanners fed a classification pipeline with a policy engine on top. The data model kept findings separate from the source content, which is what made in-place classification defensible: we never held the sensitive data, only assertions about where it lived. First thing to break at ten times the load was the findings index, because the write pattern was append-heavy and the query pattern was aggregation-heavy against the same store. Today I would separate them at the outset. Deployment was a single-tenant install for enterprises and a separate authorized cloud boundary for government, which is where most of the architectural cost went: two deployment shapes, one codebase, and a boundary that could not accept the two SaaS integrations the enterprise edition relied on.",
+      "data_classes": ["pii", "phi", "government"],
+      "deployment": "authorized_cloud",
+      "seat": "architect",
+      "contractual_overlays": ["Prime contractor security clauses", "BAA with healthcare customers"],
+      "regime_ids": ["reg.helix.fedramp", "reg.helix.soc2", "reg.helix.hipaa"],
+      "scale": ["fig.helix.data_scale"]
+    }
+  ],
+
+  "regimes": [
+    {
+      "id": "reg.helix.fedramp",
+      "name": "FedRAMP Moderate",
+      "status": "confirmed",
+      "why_attached": "Cloud offering sold to federal agencies through a sponsoring agency authorization.",
+      "observable": "3PAO assessment, system security plan, POA&M, monthly continuous monitoring package.",
+      "accountability": "accountable",
+      "cadence": "continuous",
+      "adjacent_ids": ["reg.helix.soc2"]
+    },
+    {
+      "id": "reg.helix.soc2",
+      "name": "SOC 2 Type II",
+      "status": "confirmed",
+      "why_attached": "Enterprise buyers required an independent report before purchase.",
+      "observable": "CPA firm auditor, annual audit period, control narratives, evidence request list.",
+      "accountability": "contributing",
+      "cadence": "annual"
+    },
+    {
+      "id": "reg.helix.hipaa",
+      "name": "HIPAA Security Rule",
+      "status": "open",
+      "why_attached": "PHI was in scope for healthcare customers and a BAA was in place, whether or not anyone said HIPAA in the room.",
+      "observable": "The signed BAA, and whether a risk analysis was performed against the PHI paths specifically.",
+      "accountability": "adjacent"
+    }
+  ],
+
+  "figures": [
+    {
+      "id": "fig.helix.ato_months",
+      "value": 18,
+      "unit": "months",
+      "kind": "time_to_authorization",
+      "baseline": "No boundary or control documentation existed at start",
+      "window": "2019-01 to 2020-07",
+      "instrument": "Sponsoring agency authorization letter date against project kickoff",
+      "source": "Authorization letter and the original program plan",
+      "sourceable": true,
+      "witnessed_by": ["CTO", "Program manager"],
+      "headline": true,
+      "verification": { "tier": "T2", "evidence_ids": ["ev.helix.ssp"] }
+    },
+    {
+      "id": "fig.helix.cost_removed",
+      "value": 2.4,
+      "unit": "USD_millions",
+      "kind": "cost_removed",
+      "baseline": "Annual run rate for the two retired hosting environments",
+      "window": "FY2021 annualized",
+      "instrument": "Finance cost-center report, comparing FY2020 and FY2021 hosting lines",
+      "source": "Finance quarterly report, Q4 FY2021",
+      "sourceable": true,
+      "headline": true,
+      "verification": { "tier": "T2", "evidence_ids": ["ev.helix.finance_report"] }
+    },
+    {
+      "id": "fig.helix.invest_capital", "value": 45, "unit": "USD_millions", "kind": "investment_secured",
+      "baseline": "No dedicated program funding before the case",
+      "window": "FY2020 to FY2022", "instrument": "Board-approved capital plan",
+      "source": "Board deck, February 2020", "sourceable": true
+    },
+    {
+      "id": "fig.helix.invest_opex", "value": 9, "unit": "USD_millions", "kind": "investment_secured",
+      "baseline": "Existing operating budget", "window": "FY2020 to FY2022",
+      "instrument": "Approved operating plan", "source": "Board deck, February 2020", "sourceable": true
+    },
+    {
+      "id": "fig.helix.invest_total",
+      "value": 54, "unit": "USD_millions", "kind": "investment_secured",
+      "baseline": "No dedicated program funding before the case",
+      "window": "FY2020 to FY2022",
+      "instrument": "Board-approved capital and operating plan",
+      "source": "Board deck, February 2020",
+      "sourceable": true,
+      "composite_of": ["fig.helix.invest_capital", "fig.helix.invest_opex"],
+      "headline": true,
+      "verification": { "tier": "T2" }
+    },
+    {
+      "id": "fig.helix.data_scale", "value": 3.5, "unit": "petabytes", "kind": "scanned_volume",
+      "baseline": "Largest single customer environment", "window": "2021",
+      "instrument": "Platform telemetry, scan completion records",
+      "source": "Product telemetry dashboards, no longer accessible",
+      "sourceable": false
+    }
+  ],
+
+  "claims": [
+    {
+      "id": "clm.helix.fedramp_ato",
+      "status": "confirmed",
+      "text": "Led the architecture and control implementation that produced a FedRAMP Moderate authorization for the government edition of the discovery platform.",
+      "narrative_long": "When I took this on there was a sales commitment and nothing behind it. The first real decision was where to draw the boundary, and the honest answer excluded two SaaS integrations the enterprise edition depended on, which meant telling product that the government edition would ship with less. I drew the boundary diagram, wrote the initial system security plan sections covering architecture and data flow, and then walked roughly forty controls from requirement to an implemented capability with the engineers who owned each one. The 3PAO came back with fourteen findings. Nine were documentation gaps I closed in six weeks. Three were real design problems, mostly around key custody and log integrity, and I redesigned key handling to use the platform KMS rather than our own wrapper. Two were risk-accepted by the sponsoring agency's authorizing official, over my recommendation on one of them. Authorization landed eighteen months after kickoff, and the monthly continuous monitoring package became a standing obligation my team owned from that point on.",
+      "narrative_short": "Drew the authorization boundary, authored the architecture and data flow sections of the system security plan, and walked roughly forty controls from requirement to implemented capability. Closed nine documentation findings and redesigned key custody to resolve three design findings. Authorization landed eighteen months after kickoff.",
+      "bullet": "Led architecture and control implementation for a FedRAMP Moderate authorization delivered 18 months from kickoff, including boundary definition, system security plan authorship, and remediation of 12 of 14 assessment findings.",
+      "constraint": "A sales commitment to two agencies had been made eight months before any boundary, control documentation, or baseline work existed.",
+      "role_id": "role.helix.chief_architect",
+      "system_id": "sys.helix.discovery",
+      "regime_ids": ["reg.helix.fedramp"],
+      "figure_ids": ["fig.helix.ato_months"],
+      "evidence_ids": ["ev.helix.ssp"],
+      "story_id": "sto.helix.boundary_cut",
+      "agency": "completed",
+      "authority": "matrixed",
+      "dates": { "start": "2019-01", "end": "2020-07" },
+      "confirmed_detail": "Fourteen 3PAO findings; the two risk-accepted ones went to the agency AO over my objection on log retention.",
+      "job_families": ["architect", "engineering_leader"],
+      "knowledge_currency": "dated",
+      "disclosure_limit_ids": ["dl.helix.agency"],
+      "source_session_id": "ses.helix.2026_09",
+      "verification": {
+        "tier": "T3",
+        "by_fact_type": { "accomplishment.outcome": "T3", "accomplishment.agency": "T3" },
+        "attestation_ids": ["att.helix.cto"],
+        "evidence_ids": ["ev.helix.ssp"],
+        "last_reviewed": "2026-09"
+      }
+    },
+    {
+      "id": "clm.helix.hosting_consolidation",
+      "status": "confirmed",
+      "text": "Consolidated three hosting environments into two and removed 2.4 million dollars of annual run rate.",
+      "narrative_long": "We were paying for a legacy environment nobody would decommission because two customers were still on it, plus a staging environment that had quietly become a second production. I did not do the migration work; two teams did, and one of them had to rewrite a deployment pipeline that had never been in version control. What I did was the analysis that showed the legacy environment cost more annually than the revenue from the customers on it, and then the design for the migration path that let those customers move without a contract renegotiation. Finance measured the saving against the FY2020 hosting lines. The number is defensible but it is a run-rate figure, not cash recovered in year one, and I say so when I use it.",
+      "narrative_short": "Built the cost analysis and migration design that let two remaining customers move off a legacy hosting environment, enabling two teams to consolidate three environments into two. Finance measured a 2.4 million dollar annual run-rate reduction against FY2020 hosting lines.",
+      "bullet": "Designed the migration path and cost case that removed $2.4M in annual hosting run rate by consolidating three environments into two.",
+      "constraint": "A cost reduction target set after a funding round came in below plan.",
+      "role_id": "role.helix.chief_architect",
+      "system_id": "sys.helix.discovery",
+      "figure_ids": ["fig.helix.cost_removed"],
+      "evidence_ids": ["ev.helix.finance_report"],
+      "agency": "enabled",
+      "authority": "peer_influence",
+      "dates": { "start": "2020-09", "end": "2021-06" },
+      "confirmed_detail": "The staging environment had become a second production; the pipeline for it was never in version control.",
+      "job_families": ["architect", "engineering_leader", "engineer"],
+      "knowledge_currency": "current",
+      "source_session_id": "ses.helix.2026_09",
+      "verification": { "tier": "T2", "by_fact_type": { "accomplishment.outcome": "T2" }, "evidence_ids": ["ev.helix.finance_report"] }
+    },
+    {
+      "id": "clm.helix.board_case",
+      "status": "confirmed",
+      "text": "Contributed the technical case to a board-approved 54 million dollar capital and operating plan for the platform program.",
+      "narrative_long": "This was not my case alone and I do not present it as such. The CFO built the model and the CEO carried it. I owned the technical section: what the platform would need to become to serve government and healthcare buyers at the same time, what that cost in engineering years, and what we would have to stop doing. The part that mattered in the room was the sequencing argument, that the boundary work had to precede the classification engine rewrite or we would pay for the rewrite twice. The board asked one hard question about whether the authorization timeline was credible, and I gave them a range rather than the date sales wanted.",
+      "narrative_short": "Owned the technical section of a board investment case covering platform requirements, engineering cost, and sequencing, in a case built with the CFO and CEO. Board approved 45 million dollars of capital and 9 million of operating spend across FY2020 to FY2022.",
+      "bullet": "Authored the technical and sequencing case within a board-approved $54M capital and operating plan, built with the CFO and CEO.",
+      "constraint": "The classification engine rewrite and the authorization boundary work competed for the same engineering capacity.",
+      "role_id": "role.helix.chief_architect",
+      "figure_ids": ["fig.helix.invest_total"],
+      "agency": "scoped",
+      "authority": "peer_influence",
+      "dates": { "start": "2019-11", "end": "2020-02" },
+      "confirmed_detail": "The board's hard question was on authorization timeline credibility; I answered with a range, not the date sales wanted.",
+      "job_families": ["engineering_leader", "executive", "architect"],
+      "suppress_for": ["ic_staff_engineer"],
+      "knowledge_currency": "current",
+      "source_session_id": "ses.helix.2026_09",
+      "verification": { "tier": "T1", "by_fact_type": { "accomplishment.agency": "T1" } }
+    },
+    {
+      "id": "clm.helix.hipaa_risk_analysis",
+      "status": "open",
+      "text": "Performed a HIPAA Security Rule risk analysis covering the PHI paths in the platform.",
+      "constraint": "Healthcare customers with a BAA in place.",
+      "role_id": "role.helix.chief_architect",
+      "system_id": "sys.helix.discovery",
+      "regime_ids": ["reg.helix.hipaa"],
+      "source_session_id": "ses.helix.2026_09"
+    }
+  ],
+
+  "stories": [
+    {
+      "id": "sto.helix.boundary_cut",
+      "title": "Cutting two integrations out of the authorization boundary",
+      "role_id": "role.helix.chief_architect",
+      "system_id": "sys.helix.discovery",
+      "constraint": "Sales had committed a government edition with feature parity to the enterprise edition.",
+      "before_state": "The government edition was assumed to be the same product in a different data center. Two SaaS integrations were in the architecture and neither vendor had an authorization we could inherit.",
+      "personal_action": "Drew the boundary excluding both integrations, then took the parity loss to the product and sales leads myself rather than letting it surface during assessment.",
+      "decision": "Exclude rather than pursue vendor authorization. A competent peer might have pushed the vendors, and one of them did get authorized about two years later.",
+      "result": "The boundary held through assessment with no findings against it. The government edition shipped without those two integrations and three deals closed anyway.",
+      "tradeoff": "We lost one deal specifically over the missing integration, and I was the one who had said we would.",
+      "what_went_wrong": "I made the call four months later than I should have. The engineers had already built half of one integration into the shared codebase and had to unpick it.",
+      "contradiction_risk": "The product lead at the time would say the decision was made jointly, and would be partly right; I drove it, but the final call was made in a meeting with the CTO.",
+      "claim_ids": ["clm.helix.fedramp_ato"],
+      "question_targets": ["Tell me about a decision that made you unpopular", "How do you handle scope conflicts with sales"]
+    }
+  ],
+
+  "evidence": [
+    { "id": "ev.helix.ssp", "kind": "artifact", "description": "System security plan sections covering architecture and data flow, and the boundary diagram", "producible": false, "location": "Former employer GRC system", "establishes": ["accomplishment.outcome"] },
+    { "id": "ev.helix.finance_report", "kind": "artifact", "description": "Finance quarterly cost-center report, Q4 FY2021, hosting lines", "producible": false, "location": "Former employer finance system", "establishes": ["accomplishment.outcome"] }
+  ],
+
+  "attestations": [
+    {
+      "id": "att.helix.cto",
+      "claim_ids": ["clm.helix.fedramp_ato"],
+      "attester": { "name": "Former CTO, Helix Data Systems", "relationship": "manager", "org_id": "org.helix", "title_at_time": "Chief Technology Officer", "contact_ref": "vault://contacts/helix-cto" },
+      "scope": "The authorization program, the boundary decision, and the assessment findings. Not compensation and not the hosting consolidation, which ran under a different leader.",
+      "strength": "witnessed",
+      "statement": "Dana drew the authorization boundary and owned the control implementation work with the engineering leads. The decision to exclude the two integrations was Dana's recommendation and I approved it.",
+      "status": "received",
+      "establishes": ["accomplishment.outcome", "accomplishment.agency"],
+      "requested_at": "2026-08-14",
+      "received_at": "2026-08-21"
+    }
+  ],
+
+  "records": [
+    {
+      "id": "rec.irs.helix",
+      "type": "irs_wage_transcript",
+      "verifies": ["employment.employer", "employment.dates", "employment.compensation"],
+      "covers_role_ids": ["role.helix.chief_architect"],
+      "issuer": "IRS",
+      "period": "2018 through 2022",
+      "document_ref": "vault://records/irs-wage-2018-2022",
+      "hash": "sha256:placeholder",
+      "obtained_at": "2026-08-02",
+      "sensitivity": "restricted"
+    }
+  ],
+
+  "rejections": [
+    {
+      "id": "rej.helix.pci",
+      "text": "Owned PCI DSS compliance for the payments integration and the cardholder data environment.",
+      "reason": "not_true",
+      "detail": "Scaffolded as a candidate because the platform touched financial customers. There was no cardholder data in the product and no PCI program.",
+      "rejected_at": "2026-09",
+      "session_id": "ses.helix.2026_09"
+    },
+    {
+      "id": "rej.helix.team_size",
+      "text": "Led an engineering organization of more than one hundred people across four locations.",
+      "reason": "vague_recall_only",
+      "detail": "Total org was 48 at peak. The larger figure came from counting a partner's contractors, which does not survive a reference check.",
+      "rejected_at": "2026-09",
+      "session_id": "ses.helix.2026_09"
+    }
+  ],
+
+  "open_questions": [
+    {
+      "id": "oq.helix.risk_analysis",
+      "question": "Was a documented HIPAA Security Rule risk analysis performed against the PHI paths, or was PHI handling covered only inside the SOC 2 and FedRAMP work?",
+      "kind": "partial",
+      "close_action": "Ask the former compliance lead, who ran the BAA program, whether a separate risk analysis document existed.",
+      "blocks_claim_ids": ["clm.helix.hipaa_risk_analysis"],
+      "payoff": "high"
+    },
+    {
+      "id": "oq.helix.scan_volume",
+      "question": "What was the largest verified scanned data volume, and can any source for it still be produced?",
+      "kind": "unsourceable_figure",
+      "close_action": "Check whether the 2021 customer case study naming the environment is still published on the vendor site.",
+      "payoff": "medium"
+    }
+  ],
+
+  "positioning": {
+    "targets": [
+      {
+        "key": "architect_director",
+        "job_family": "architect",
+        "seniority": "director",
+        "tagline": "Enterprise Architect | Regulated Cloud, Authorization and Platform Modernization",
+        "carries": ["clm.helix.fedramp_ato", "clm.helix.hosting_consolidation"],
+        "suppress": [],
+        "objection": "Has not architected at consumer scale.",
+        "objection_answer": "Correct. The scale I have is regulatory and operational complexity, not request volume, and I would want to know which one this role actually needs.",
+        "fit": "strong"
+      },
+      {
+        "key": "ic_staff_engineer",
+        "job_family": "engineer",
+        "seniority": "ic",
+        "tagline": "Staff Engineer | Distributed Data Systems and Regulated Deployment",
+        "carries": ["clm.helix.hosting_consolidation"],
+        "suppress": ["clm.helix.board_case"],
+        "objection": "Chief Architect title and board exposure suggest this candidate will not stay hands-on.",
+        "objection_answer": "Fair question. The board work was one quarter of one year; the rest was design review and code. I am applying because I want the design problem back, and I would rather say that than pretend the title did not happen.",
+        "fit": "moderate"
+      }
+    ]
+  },
+
+  "disclosure_limits": [
+    {
+      "id": "dl.helix.agency",
+      "kind": "customer_name",
+      "scope": "The sponsoring agency for the authorization cannot be named in public materials.",
+      "workaround": "Render as a federal civilian agency."
+    }
+  ],
+
+  "sessions": [
+    {
+      "id": "ses.helix.2026_09",
+      "date": "2026-09",
+      "subject": "The discovery platform and its authorization into a government cloud boundary",
+      "variant": "system_reconstruction",
+      "track": "architect",
+      "next_scaffold": [
+        "The SOC 2 program: which controls Dana personally owned versus reviewed",
+        "The classification engine rewrite, which has not been interrogated at all",
+        "Healthcare customers: BAA obligations and whether HIPAA work happened under another name"
+      ]
+    }
+  ]
+}

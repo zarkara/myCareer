@@ -1,0 +1,52 @@
+WHAT THE APP DOES
+
+myCareer is a structured writing tool for reconstructing a work history in long form,
+then exporting it as a Markdown file the person keeps.
+
+It is not a note-taking app with an export button. The structure is the product:
+
+1. PROMPT SETS. Each screen carries the questions that pull specifics out of a vague
+   memory: what would have broken if you had not been there, who else was in the room,
+   what went wrong, who could contradict this account. These are drawn from a
+   documented interview protocol and are the reason the writing produced here differs
+   from writing produced in a blank text field.
+
+2. THE AGENCY DISTINCTION. Every entry is recorded as one of three claims: the person
+   did it, scoped it and handed it off, or enabled a team to do it. The app does not
+   let these collapse into one another, because they are materially different claims
+   to make to an employer.
+
+3. PROVENANCE ON NUMBERS. Each figure carries what it measures, its baseline, and
+   where its source could be produced from, plus a flag for whether the person can
+   actually produce that source today. Unsourced figures are marked in the editor and
+   segregated into their own section of the export, headed "Numbers that still need a
+   source."
+
+4. THE EXPORT. Renders the whole record as Markdown, including the provenance tables
+   and the unsourced-numbers section, and hands it to the share sheet.
+
+TO REVIEW IT
+
+The app opens empty. Please use the sample content rather than reviewing empty text
+fields:
+
+  1. Tap "Add a chapter" and fill in a title, organization, and dates.
+  2. Write a paragraph in "The chapter". Expand "What to answer here" to see the
+     prompt set.
+  3. Tap "Add something you did", set the agency picker, and add a number. Toggle
+     "I can produce that source today" off to see the flagging behavior.
+  4. Tap the export icon in the navigation bar. The rendered Markdown appears with
+     an unsourced-numbers section at the bottom; "Save" opens the share sheet.
+
+PRIVACY AND NETWORKING
+
+The app contains no networking code of any kind. There are no SDKs, no analytics, no
+accounts, no sign-in, no sync, and no advertising. Data is written to one JSON file in
+the app's Documents directory. UIFileSharingEnabled and LSSupportsOpeningDocumentsInPlace
+are set so the user can retrieve their own writing through the Files app without this
+app installed, which is deliberate: the record is intended to outlive the app.
+
+The privacy manifest declares no tracking, no collected data types, and no
+required-reason API usage, all of which are accurate.
+
+No account is required, so no demo credentials are needed.

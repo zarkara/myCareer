@@ -1,0 +1,14 @@
+{
+  "name": "mycareer",
+  "displayName": "myCareer",
+  "owner": { "name": "myCareer" },
+  "plugins": [
+    {
+      "name": "mycareer",
+      "displayName": "myCareer",
+      "description": "Verified career record: recognition-harness interviews, provenance-checked claims, and rendered resumes, profiles and executive letters.",
+      "version": "0.1.0",
+      "source": { "type": "git", "url": "https://github.com/zarkara/myCareer", "ref": "main", "subpath": "." }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "version": "1",
+  "person": { "name": "", "tagline": "Pipes | and | separators", "location": "Reno, NV" },
+  "roles": [
+    {
+      "id": "bbbbbbbb-0000-0000-0000-000000000002",
+      "title": "",
+      "org": "",
+      "location": "",
+      "start": "2020",
+      "end": "",
+      "chapter": "Second of two roles that share a start date. Ordering between these two is decided by id, not by luck.",
+      "entries": [
+        {
+          "id": "cccccccc-0000-0000-0000-000000000001",
+          "text": "",
+          "narrative": "",
+          "constraint": "",
+          "agency": "completed",
+          "confirmedDetail": "",
+          "whatWentWrong": "",
+          "couldConfirm": "",
+          "figures": [{ "id": "dddddddd-0000-0000-0000-000000000001", "value": "", "what": "blank figure on a blank entry", "baseline": "", "source": "", "sourceable": false }]
+        }
+      ]
+    },
+    {
+      "id": "aaaaaaaa-0000-0000-0000-000000000001",
+      "title": "Contract Analyst",
+      "org": "A federal civilian agency",
+      "location": "Remote",
+      "start": "2020",
+      "end": "",
+      "chapter": "",
+      "entries": [
+        {
+          "id": "cccccccc-0000-0000-0000-000000000002",
+          "text": "Rebuilt the intake queue.",
+          "narrative": "",
+          "constraint": "",
+          "agency": "enabled",
+          "confirmedDetail": "",
+          "whatWentWrong": "",
+          "couldConfirm": "",
+          "figures": [
+            { "id": "dddddddd-0000-0000-0000-000000000002", "value": "40%", "what": "throughput | measured weekly", "baseline": "", "source": "Queue dashboard | retired", "sourceable": false },
+            { "id": "dddddddd-0000-0000-0000-000000000003", "value": "6 weeks", "what": "time to clear the backlog", "baseline": "14 weeks", "source": "Ticket system export", "sourceable": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eeeeeeee-0000-0000-0000-000000000003",
+      "title": "Intern",
+      "org": "",
+      "location": "",
+      "start": "",
+      "end": "2014",
+      "chapter": "",
+      "entries": []
+    }
+  ]
+}

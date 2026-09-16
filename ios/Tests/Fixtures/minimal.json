@@ -1,0 +1,16 @@
+{
+  "version": "1",
+  "person": { "name": "Sam Ortiz", "tagline": "", "location": "" },
+  "roles": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "title": "Systems Engineer",
+      "org": "Northbay Logistics",
+      "location": "",
+      "start": "2015",
+      "end": "2019",
+      "chapter": "",
+      "entries": []
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+Most people do not have a resume problem. They have a recall problem.
+
+Twenty years of work compresses, in memory, into six bullet points that could describe anyone. The projects blur. The numbers go missing. The decision you are proudest of turns into a sentence with no detail in it, because the detail was never written down anywhere.
+
+myCareer is where you write it down.
+
+ONE CHAPTER PER ROLE
+Write long. What state the place was in when you arrived, what you inherited, what changed, what the role added to what you can do. Not bullet points. The actual account, in your own words, at the length it takes.
+
+THE QUESTIONS THAT GET SPECIFICS OUT OF YOU
+Every screen carries the prompts that turn a vague memory into a defensible one. What would have broken if you had not been there. Who else was in the room. What did people say when it shipped. What went wrong. Who could contradict this, and what would they say.
+
+THREE CLAIMS, NEVER ONE
+Every entry records whether you did it, scoped it and handed it off, or enabled a team to do it. These are three different things. Letting one drift into another is the fastest way to come apart in a reference check.
+
+NUMBERS THAT SURVIVE A QUESTION
+Each figure carries what it measures, what it was before, and where you could produce the source. Anything you cannot source gets flagged, and lands in its own section of the export: numbers that still need a source. A number you cannot back up is left out, not softened.
+
+EXPORT TO MARKDOWN YOU OWN
+One tap writes a plain Markdown file. Save it to Files, AirDrop it, mail it, or open it in any editor on any machine. Your writing also sits in the Files app as a readable JSON document from the moment you type it, so nothing is locked inside this app.
+
+NOTHING LEAVES YOUR PHONE
+No account. No sign-in. No sync. No analytics. No advertising. No network code of any kind. Your career is stored as ordinary files on your own device, and that is the whole architecture.
+
+Write the record once. Everything else, a resume, a profile, a cover letter, an answer to "tell me about yourself", is a compression of it. Compression only runs one direction, which is why the long version has to exist first.

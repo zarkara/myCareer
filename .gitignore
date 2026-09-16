@@ -1,0 +1,21 @@
+node_modules/
+out/
+out-ic/
+documents/
+*.corpus.json
+
+# Internal only. Strategy, competitive analysis, and go-to-market are not product,
+# and a public repo is a bad place for a named teardown of someone else's business.
+private/
+
+# Never commit a real career record. It is the most sensitive file this project touches.
+corpus.json
+mycareer.json
+!ios/Tests/Fixtures/*.json
+!schema/mycareer.example.json
+
+# Build products
+share/mycareer.zip
+ios/MyCareer.xcodeproj/
+ios/build/
+.DS_Store

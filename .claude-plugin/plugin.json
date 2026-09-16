@@ -1,0 +1,10 @@
+{
+  "name": "mycareer",
+  "displayName": "myCareer",
+  "version": "0.1.0",
+  "description": "Turn a career into a verified record, then render resumes, LinkedIn profiles, and executive letters from it. A recognition harness reconstructs what you actually did at autobiography depth; a validator refuses to let any document claim more than the evidence supports.",
+  "author": { "name": "myCareer" },
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": ["career", "resume", "cv", "linkedin", "interview", "executive", "compliance", "job-search"],
+  "skills": "./skills/"
+}
