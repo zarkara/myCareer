@@ -14,26 +14,32 @@ Please try to break both.
 
 ## Setup, once
 
-**What you need:** Claude on the web (claude.ai) or Claude Desktop, on a Pro, Max, Team, or
-Enterprise plan, with **code execution enabled**.
+**Either Claude or ChatGPT works.** Pick whichever you already pay for. Both need the code
+tool enabled, or the scripts cannot run and only Track B is testable.
+
+**On Claude** (claude.ai or the desktop app, Pro, Max, Team or Enterprise):
 
 1. Open **Settings → Capabilities** and confirm **code execution** (also called the analysis
-   or code tool) is on. Without it the scripts cannot run and you can only test Track B.
+   or code tool) is on.
 2. Open **Customize → Skills**, click **+**, and upload `mycareer.zip`.
 3. Start a **new chat**.
 
 ### On ChatGPT instead
 
-The same test works on a personal ChatGPT account. Download  from the
-[release page](https://github.com/zarkara/myCareer/releases/tag/v0.1.0), create a Project, add
-the reference files, and paste  into the project's Instructions
-field. Full steps are in the release notes and in  inside that zip.
+The same test works on a personal ChatGPT account, and setup is a little easier. Download
+`mycareer-chatgpt.zip` from the
+[release page](https://github.com/zarkara/myCareer/releases/tag/v0.1.0), create a **Project**,
+add `INTERVIEW.md`, `RENDER.md` and the three files in `reference/` as project files, then
+paste the whole of `project-instructions.txt` into the project's **Instructions** field. Start
+your chats from inside the project. Full steps are in the release notes and in `README.md`
+inside that zip.
 
-Everything below applies unchanged, except that you attach  to a message rather
-than relying on a skill, and rendering produces Markdown.
+Everything below applies unchanged, with three differences: say "myCareer" rather than "the
+myCareer skill", attach `mycareer.py` and your corpus to a message when you want the scripts
+run, and expect Markdown rather than Word files.
 
-**If skills are not available to you**, use the fallback at the bottom of this page instead.
-It tests the same things with slightly more typing.
+**If neither skills nor projects are available to you**, use the fallback at the bottom of this
+page instead. It tests the same things with slightly more typing.
 
 ---
 
