@@ -1,0 +1,374 @@
+{
+  "adjacency_version": "0.1",
+  "note": "Backs Phase 2B of the recognition harness. Adjacency is COMPUTED, not generated: two regimes are neighbors when they share evidence clusters, so the scaffold becomes retrieval and its accuracy is auditable. Trigger conditions are keyed to the system attributes captured in Phase 1, so candidate regimes are derived mechanically from what the subject described. Everything produced from this file is still a CANDIDATE and still requires confirmation with a novel detail.",
+
+  "evidence_clusters": {
+    "access_review": "Periodic user access certification, joiner-mover-leaver, privileged access, segregation of duties",
+    "risk_assessment": "Formal risk analysis, risk register, treatment plans, management acceptance",
+    "vendor_risk": "Third-party assessments, security questionnaires, sub-processor lists, flow-down clauses",
+    "change_control": "Approval gates, release management, emergency change handling, separation of duties in deploy",
+    "incident_response": "IR plan, classification, notification decision, tabletop exercises, postmortems",
+    "crypto_key_mgmt": "Encryption in transit and at rest, key rotation, HSM or KMS custody",
+    "logging_monitoring": "Log integrity, retention, alerting, SIEM, audit trails",
+    "bcdr": "Backup, restore testing, DR exercises, RTO and RPO definition",
+    "awareness_training": "Role-based security training, phishing simulation, completion evidence",
+    "pen_test": "Scoping, execution, remediation tracking, retest, scan cadence",
+    "asset_inventory": "System and data inventory, classification, ownership",
+    "data_flow_mapping": "Data flow diagrams, boundary definition, transfer mechanisms",
+    "retention_deletion": "Retention schedules, deletion propagation, legal hold",
+    "subject_rights": "Access, deletion, correction, portability, opt-out request handling",
+    "policy_governance": "Policy set, ownership, annual review, exception process",
+    "control_narratives": "Written control descriptions, evidence collection, auditor walkthroughs",
+    "continuous_monitoring": "Ongoing control evidence, monthly reporting, POA and M discipline",
+    "customer_security_review": "Customer security questionnaires, contract security exhibits, audit rights",
+    "accessibility_testing": "WCAG conformance testing, VPAT, assistive technology validation",
+    "validation_qualification": "IQ, OQ, PQ, validation protocols and reports"
+  },
+
+  "trigger_conditions": {
+    "data_classes": {
+      "phi": ["reg.hipaa_security", "reg.hipaa_privacy", "reg.hitrust"],
+      "cardholder": ["reg.pci_dss", "reg.scheme_rules"],
+      "pii": ["reg.state_breach_laws"],
+      "eu_resident": ["reg.gdpr"],
+      "ca_resident": ["reg.ccpa"],
+      "minors": ["reg.coppa", "reg.ferpa"],
+      "biometric": ["reg.bipa"],
+      "financial_records": ["reg.glba", "reg.ffiec"],
+      "government": ["reg.fisma", "reg.fedramp"],
+      "cui": ["reg.nist_800_171", "reg.cmmc"],
+      "classified": ["reg.nispom"],
+      "auth_material": ["reg.soc2", "reg.iso27001"]
+    },
+    "buyer_types": {
+      "enterprise": ["reg.soc2", "reg.iso27001"],
+      "government": ["reg.fedramp", "reg.fisma", "reg.section508", "reg.stateramp"],
+      "defense": ["reg.cmmc", "reg.nist_800_171", "reg.itar"],
+      "healthcare": ["reg.hipaa_security", "reg.hitrust"],
+      "financial": ["reg.sox", "reg.glba", "reg.ffiec", "reg.nydfs500"],
+      "education": ["reg.ferpa"],
+      "consumer": ["reg.ccpa", "reg.coppa"]
+    },
+    "money_movement": {
+      "ach": ["reg.nacha"],
+      "card": ["reg.pci_dss", "reg.scheme_rules"],
+      "wire": ["reg.bsa_aml"],
+      "any": ["reg.bsa_aml"]
+    },
+    "deployment": {
+      "authorized_cloud": ["reg.fedramp", "reg.fisma"],
+      "air_gapped": ["reg.nispom", "reg.itar"],
+      "multi_tenant_saas": ["reg.soc2"]
+    },
+    "org_attributes": {
+      "public_company": ["reg.sox", "reg.sec_cyber"],
+      "eu_financial_entity": ["reg.dora"],
+      "eu_essential_entity": ["reg.nis2"],
+      "fda_regulated": ["reg.part11"],
+      "fcc_regulated": ["reg.cvaa"],
+      "ai_system_eu": ["reg.eu_ai_act"]
+    }
+  },
+
+  "regimes": [
+    {
+      "id": "reg.soc2",
+      "name": "SOC 2 Type II",
+      "kind": "attestation",
+      "why": "Multi-tenant service handling customer data, sold to enterprise buyers who demand an independent report.",
+      "observable": "A CPA firm auditor, a defined audit period, control narratives, an evidence request list, a bridge letter between periods.",
+      "clusters": ["access_review", "risk_assessment", "vendor_risk", "change_control", "incident_response", "crypto_key_mgmt", "logging_monitoring", "bcdr", "awareness_training", "pen_test", "policy_governance", "control_narratives", "customer_security_review"],
+      "role_signals": ["owned the evidence collection calendar", "sat in auditor walkthroughs", "wrote or reviewed control narratives", "negotiated a qualified opinion or an exception"]
+    },
+    {
+      "id": "reg.iso27001",
+      "name": "ISO/IEC 27001",
+      "kind": "certification",
+      "why": "International customers or a procurement process that treats certification as table stakes.",
+      "observable": "An accredited certification body, a Statement of Applicability, internal audit, management review minutes, a three-year cycle with surveillance audits.",
+      "clusters": ["access_review", "risk_assessment", "vendor_risk", "change_control", "incident_response", "crypto_key_mgmt", "logging_monitoring", "bcdr", "awareness_training", "asset_inventory", "policy_governance", "control_narratives"],
+      "role_signals": ["maintained the Statement of Applicability", "ran the ISMS management review", "handled a nonconformity"]
+    },
+    {
+      "id": "reg.hipaa_security",
+      "name": "HIPAA Security Rule",
+      "kind": "regulation",
+      "why": "Electronic PHI handled as a covered entity or business associate.",
+      "observable": "A signed BAA, a documented risk analysis, workforce sanction policy, breach classification decisions.",
+      "clusters": ["access_review", "risk_assessment", "incident_response", "crypto_key_mgmt", "logging_monitoring", "bcdr", "awareness_training", "policy_governance"],
+      "role_signals": ["decided whether an event was a reportable breach", "sized the 60-day notification clock", "designed role-based access to PHI"],
+      "silent_form": "Very often done without anyone saying HIPAA out loud: if PHI was in the system and there was a customer contract, a BAA existed and its obligations attached."
+    },
+    {
+      "id": "reg.hipaa_privacy",
+      "name": "HIPAA Privacy Rule",
+      "kind": "regulation",
+      "why": "Use and disclosure of PHI, not just its protection.",
+      "observable": "Minimum-necessary access design, notice of privacy practices, accounting of disclosures, patient access requests.",
+      "clusters": ["access_review", "subject_rights", "retention_deletion", "policy_governance"],
+      "role_signals": ["implemented minimum-necessary filtering", "built patient record access or amendment flows"]
+    },
+    {
+      "id": "reg.hitrust",
+      "name": "HITRUST CSF",
+      "kind": "certification",
+      "why": "Healthcare buyers who want one assessment that maps across HIPAA, ISO and NIST.",
+      "observable": "An authorized external assessor, MyCSF, a scored r2 assessment, a corrective action plan.",
+      "clusters": ["access_review", "risk_assessment", "vendor_risk", "change_control", "incident_response", "crypto_key_mgmt", "logging_monitoring", "bcdr", "awareness_training", "pen_test", "asset_inventory", "policy_governance", "control_narratives"],
+      "role_signals": ["mapped existing SOC 2 evidence into the CSF", "owned a corrective action plan"]
+    },
+    {
+      "id": "reg.pci_dss",
+      "name": "PCI DSS",
+      "kind": "scheme_rule",
+      "why": "Cardholder data stored, processed or transmitted.",
+      "observable": "A QSA or a self-assessment questionnaire, quarterly ASV scans, segmentation testing, a cardholder data environment boundary.",
+      "clusters": ["access_review", "change_control", "incident_response", "crypto_key_mgmt", "logging_monitoring", "pen_test", "asset_inventory", "data_flow_mapping", "policy_governance"],
+      "role_signals": ["made the tokenization or scope-reduction decision", "defined the CDE boundary", "chose SAQ type or drove a ROC"]
+    },
+    {
+      "id": "reg.scheme_rules",
+      "name": "Card scheme and acquirer rules",
+      "kind": "contractual",
+      "why": "Card acceptance pulls in the acquirer agreement and network rules alongside PCI DSS.",
+      "observable": "Acquirer correspondence, chargeback ratio monitoring, network compliance programs, BIN sponsorship.",
+      "clusters": ["vendor_risk", "customer_security_review", "policy_governance"],
+      "role_signals": ["handled a chargeback threshold program", "negotiated acquirer or processor terms"]
+    },
+    {
+      "id": "reg.nacha",
+      "name": "NACHA Operating Rules",
+      "kind": "scheme_rule",
+      "why": "ACH origination or receipt.",
+      "observable": "ODFI agreement, return code handling, re-presentment limits, account validation for WEB debits, an annual rules compliance audit.",
+      "clusters": ["vendor_risk", "logging_monitoring", "policy_governance", "customer_security_review"],
+      "role_signals": ["built return and NOC handling", "implemented account validation", "owned settlement timing and cutoffs"]
+    },
+    {
+      "id": "reg.bsa_aml",
+      "name": "BSA / AML and sanctions screening",
+      "kind": "regulation",
+      "why": "Money movement of any kind at a regulated institution or its technology provider.",
+      "observable": "KYC and CIP flows, OFAC screening, SAR referral paths, transaction monitoring rules and tuning.",
+      "clusters": ["logging_monitoring", "risk_assessment", "vendor_risk", "policy_governance"],
+      "role_signals": ["tuned monitoring rules against false positives", "built sanctions screening into onboarding"]
+    },
+    {
+      "id": "reg.fedramp",
+      "name": "FedRAMP",
+      "kind": "authorization",
+      "why": "Cloud service offered to federal agencies.",
+      "observable": "A 3PAO, an SSP, a control baseline at Low, Moderate or High, a POA&M, monthly continuous monitoring deliverables, an agency or program authorization.",
+      "clusters": ["access_review", "risk_assessment", "vendor_risk", "change_control", "incident_response", "crypto_key_mgmt", "logging_monitoring", "bcdr", "awareness_training", "pen_test", "asset_inventory", "data_flow_mapping", "policy_governance", "control_narratives", "continuous_monitoring"],
+      "role_signals": ["owned the boundary diagram", "walked a control from requirement to implemented capability", "managed POA&M burndown", "tied a payment or launch gate to the authorization date"]
+    },
+    {
+      "id": "reg.fisma",
+      "name": "FISMA / NIST RMF",
+      "kind": "law",
+      "why": "Federal information systems, whether agency-run or contractor-operated.",
+      "observable": "An ATO letter, a system categorization, annual assessment, an authorizing official.",
+      "clusters": ["risk_assessment", "control_narratives", "continuous_monitoring", "policy_governance", "incident_response", "asset_inventory"],
+      "role_signals": ["supported an ATO package", "worked to an authorizing official's conditions"]
+    },
+    {
+      "id": "reg.nist_800_171",
+      "name": "NIST SP 800-171 / DFARS 252.204-7012",
+      "kind": "contractual",
+      "why": "Controlled Unclassified Information on a defense contract or its supply chain.",
+      "observable": "An SSP, a POA&M, an SPRS score, incident reporting to DoD within 72 hours, flow-down to subcontractors.",
+      "clusters": ["access_review", "risk_assessment", "incident_response", "crypto_key_mgmt", "logging_monitoring", "asset_inventory", "vendor_risk", "policy_governance"],
+      "role_signals": ["computed or defended an SPRS score", "handled CUI marking and boundary"]
+    },
+    {
+      "id": "reg.cmmc",
+      "name": "CMMC",
+      "kind": "certification",
+      "why": "DoD contracts requiring assessed rather than self-attested 800-171 implementation.",
+      "observable": "A C3PAO assessment, a level determination, an affirming official.",
+      "clusters": ["access_review", "risk_assessment", "incident_response", "crypto_key_mgmt", "logging_monitoring", "asset_inventory", "vendor_risk", "policy_governance", "control_narratives"],
+      "role_signals": ["prepared for or sat through a C3PAO assessment", "scoped an enclave to reduce assessment surface"]
+    },
+    {
+      "id": "reg.itar",
+      "name": "ITAR / EAR export control",
+      "kind": "regulation",
+      "why": "Defense articles, technical data, or controlled technology, including access by non-US persons.",
+      "observable": "US-persons-only access controls, deemed-export analysis, an empowered official, technology control plan.",
+      "clusters": ["access_review", "asset_inventory", "data_flow_mapping", "policy_governance"],
+      "role_signals": ["designed nationality-based access segregation", "handled a deemed export question for an offshore team"]
+    },
+    {
+      "id": "reg.nispom",
+      "name": "NISPOM / classified processing",
+      "kind": "regulation",
+      "why": "Classified information on cleared facilities or systems.",
+      "observable": "An FSO, a facility clearance, accreditation of the processing environment, personnel clearances.",
+      "clusters": ["access_review", "asset_inventory", "policy_governance", "incident_response"],
+      "role_signals": ["worked in an accredited environment", "held a clearance tied to the role"],
+      "caution": "Frequently subject to disclosure limits. Capture the fact, mark the limit, render generically."
+    },
+    {
+      "id": "reg.gdpr",
+      "name": "GDPR",
+      "kind": "regulation",
+      "why": "Personal data of people in the EU, regardless of where the company sits.",
+      "observable": "Records of processing under Article 30, DPIAs, a DPA with customers, sub-processor lists and notice, SCCs or an adequacy basis for transfers, a 72-hour supervisory notification clock.",
+      "clusters": ["subject_rights", "retention_deletion", "data_flow_mapping", "vendor_risk", "incident_response", "policy_governance", "risk_assessment"],
+      "role_signals": ["built deletion propagation across systems and backups", "produced a DPIA", "handled a transfer mechanism change"]
+    },
+    {
+      "id": "reg.ccpa",
+      "name": "CCPA / CPRA",
+      "kind": "law",
+      "why": "Personal information of California residents at a business meeting the thresholds.",
+      "observable": "Opt-out of sale or sharing, service-provider contract terms, verified consumer requests, a privacy policy with disclosure categories.",
+      "clusters": ["subject_rights", "retention_deletion", "data_flow_mapping", "vendor_risk", "policy_governance"],
+      "role_signals": ["built the request intake and verification flow", "propagated deletion to downstream systems"]
+    },
+    {
+      "id": "reg.state_breach_laws",
+      "name": "State breach notification laws",
+      "kind": "law",
+      "why": "Personal information about residents of essentially any US state.",
+      "observable": "A notification decision matrix by state, attorney-general notice thresholds, timing obligations that differ by jurisdiction.",
+      "clusters": ["incident_response", "policy_governance"],
+      "role_signals": ["ran the multi-state notification analysis for an incident"]
+    },
+    {
+      "id": "reg.glba",
+      "name": "GLBA Safeguards Rule",
+      "kind": "regulation",
+      "why": "Customer financial information at a financial institution or a covered non-bank.",
+      "observable": "A named qualified individual, a written risk assessment, MFA, encryption requirements, an annual report to the board.",
+      "clusters": ["risk_assessment", "access_review", "crypto_key_mgmt", "vendor_risk", "incident_response", "awareness_training", "policy_governance"],
+      "role_signals": ["was the qualified individual or briefed them", "presented the annual security report"]
+    },
+    {
+      "id": "reg.ffiec",
+      "name": "FFIEC examination expectations",
+      "kind": "regulation",
+      "why": "Banks and credit unions, and the technology providers examined alongside them.",
+      "observable": "Examiner requests, the IT handbooks, third-party risk expectations, findings and matters requiring attention.",
+      "clusters": ["vendor_risk", "risk_assessment", "bcdr", "change_control", "policy_governance", "control_narratives"],
+      "role_signals": ["responded to an examination request", "remediated an MRA"]
+    },
+    {
+      "id": "reg.nydfs500",
+      "name": "NYDFS Part 500",
+      "kind": "regulation",
+      "why": "Financial services licensed in New York.",
+      "observable": "A CISO report to the board, annual certification of compliance, 72-hour incident notice, MFA mandates.",
+      "clusters": ["access_review", "risk_assessment", "incident_response", "crypto_key_mgmt", "pen_test", "policy_governance"],
+      "role_signals": ["drafted the CISO board report", "signed or supported the annual certification"]
+    },
+    {
+      "id": "reg.sox",
+      "name": "Sarbanes-Oxley ITGC",
+      "kind": "law",
+      "why": "A public company, or a company preparing for one, with systems touching financial reporting.",
+      "observable": "Scoped in-scope applications, external auditor testing, quarterly control evidence, deficiency and material weakness language.",
+      "clusters": ["access_review", "change_control", "logging_monitoring", "control_narratives", "policy_governance"],
+      "role_signals": ["owned segregation of duties in a financial system", "remediated a control deficiency before year-end"]
+    },
+    {
+      "id": "reg.sec_cyber",
+      "name": "SEC cybersecurity disclosure",
+      "kind": "regulation",
+      "why": "Public issuers must disclose material cybersecurity incidents and describe risk management annually.",
+      "observable": "A materiality determination process, 8-K timing discipline, annual risk-management and governance disclosure.",
+      "clusters": ["incident_response", "risk_assessment", "policy_governance"],
+      "role_signals": ["participated in a materiality determination", "provided input to the annual disclosure"]
+    },
+    {
+      "id": "reg.dora",
+      "name": "DORA",
+      "kind": "regulation",
+      "why": "EU financial entities and their critical ICT providers.",
+      "observable": "A register of information on ICT third parties, incident classification and reporting, threat-led penetration testing, contractual requirements on providers.",
+      "clusters": ["vendor_risk", "incident_response", "pen_test", "bcdr", "risk_assessment", "policy_governance"],
+      "role_signals": ["populated the register of information", "renegotiated provider contracts for the required clauses"]
+    },
+    {
+      "id": "reg.nis2",
+      "name": "NIS2",
+      "kind": "regulation",
+      "why": "Essential or important entities operating in the EU.",
+      "observable": "Early warning within 24 hours, incident notification, management accountability, supply chain security measures.",
+      "clusters": ["incident_response", "vendor_risk", "risk_assessment", "policy_governance"],
+      "role_signals": ["mapped the entity classification", "built the 24-hour early warning path"]
+    },
+    {
+      "id": "reg.part11",
+      "name": "21 CFR Part 11",
+      "kind": "regulation",
+      "why": "Electronic records and signatures in an FDA-regulated context.",
+      "observable": "Validation protocols and reports, audit trails that cannot be disabled, electronic signature binding, change control tied to validation state.",
+      "clusters": ["validation_qualification", "change_control", "logging_monitoring", "access_review", "policy_governance"],
+      "role_signals": ["ran IQ, OQ or PQ", "kept a system in a validated state through a release"]
+    },
+    {
+      "id": "reg.ferpa",
+      "name": "FERPA",
+      "kind": "law",
+      "why": "Education records at an institution or its service provider.",
+      "observable": "School official exception language in contracts, directory information handling, parent and student access rights.",
+      "clusters": ["subject_rights", "access_review", "retention_deletion", "policy_governance"],
+      "role_signals": ["built role-based access to student records"]
+    },
+    {
+      "id": "reg.coppa",
+      "name": "COPPA",
+      "kind": "law",
+      "why": "Personal information from children under 13.",
+      "observable": "Verifiable parental consent flows, age gating, retention limits, restrictions on behavioral advertising.",
+      "clusters": ["subject_rights", "retention_deletion", "policy_governance"],
+      "role_signals": ["implemented age gating or parental consent"]
+    },
+    {
+      "id": "reg.bipa",
+      "name": "BIPA and state biometric laws",
+      "kind": "law",
+      "why": "Biometric identifiers collected from residents of Illinois and similar states.",
+      "observable": "Written consent before collection, a published retention and destruction schedule, a prohibition on sale.",
+      "clusters": ["retention_deletion", "subject_rights", "policy_governance"],
+      "role_signals": ["built the consent capture", "implemented the destruction schedule"]
+    },
+    {
+      "id": "reg.section508",
+      "name": "Section 508 / WCAG",
+      "kind": "regulation",
+      "why": "Software sold to federal or state government, and increasingly to enterprises with accessibility policies.",
+      "observable": "A VPAT or Accessibility Conformance Report, assistive technology testing, remediation backlogs tied to procurement.",
+      "clusters": ["accessibility_testing", "change_control", "customer_security_review"],
+      "role_signals": ["produced or defended a VPAT", "made an accessibility remediation a release gate"]
+    },
+    {
+      "id": "reg.cvaa",
+      "name": "FCC accessibility and 911 obligations",
+      "kind": "regulation",
+      "why": "Advanced communications services and interconnected voice.",
+      "observable": "CVAA recordkeeping certifications, E911 or NG911 location and routing obligations, interoperability testing, agency reporting.",
+      "clusters": ["accessibility_testing", "logging_monitoring", "policy_governance"],
+      "role_signals": ["filed or supported an FCC certification", "implemented location routing"]
+    },
+    {
+      "id": "reg.stateramp",
+      "name": "StateRAMP",
+      "kind": "authorization",
+      "why": "Cloud services sold to state and local government.",
+      "observable": "A StateRAMP authorization package, a 3PAO, continuous monitoring against a state program.",
+      "clusters": ["control_narratives", "continuous_monitoring", "risk_assessment", "policy_governance", "pen_test"],
+      "role_signals": ["reused a FedRAMP package for a state authorization"]
+    },
+    {
+      "id": "reg.eu_ai_act",
+      "name": "EU AI Act",
+      "kind": "regulation",
+      "why": "AI systems placed on the EU market, with obligations scaled to risk tier.",
+      "observable": "Risk classification of the system, technical documentation, transparency notices, human oversight design, logging of system operation.",
+      "clusters": ["risk_assessment", "logging_monitoring", "policy_governance", "data_flow_mapping"],
+      "role_signals": ["classified a system's risk tier", "built the human oversight or transparency layer"]
+    }
+  ]
+}

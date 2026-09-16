@@ -22,6 +22,16 @@ Enterprise plan, with **code execution enabled**.
 2. Open **Customize → Skills**, click **+**, and upload `mycareer.zip`.
 3. Start a **new chat**.
 
+### On ChatGPT instead
+
+The same test works on a personal ChatGPT account. Download  from the
+[release page](https://github.com/zarkara/myCareer/releases/tag/v0.1.0), create a Project, add
+the reference files, and paste  into the project's Instructions
+field. Full steps are in the release notes and in  inside that zip.
+
+Everything below applies unchanged, except that you attach  to a message rather
+than relying on a skill, and rendering produces Markdown.
+
 **If skills are not available to you**, use the fallback at the bottom of this page instead.
 It tests the same things with slightly more typing.
 

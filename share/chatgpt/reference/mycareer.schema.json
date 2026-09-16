@@ -1,0 +1,519 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mycareer.dev/schema/mycareer-0.1.json",
+  "title": "myCareer corpus",
+  "description": "High-fidelity career record. Captured at autobiography depth, verified per fact type, rendered on demand into resumes, profiles, letters and interview answers. See docs/mycareer.md.",
+  "type": "object",
+  "required": ["mycareer_version", "person"],
+  "additionalProperties": false,
+
+  "properties": {
+    "mycareer_version": { "const": "0.1" },
+    "person": { "$ref": "#/$defs/person" },
+    "orgs": { "type": "array", "items": { "$ref": "#/$defs/org" } },
+    "roles": { "type": "array", "items": { "$ref": "#/$defs/role" } },
+    "systems": { "type": "array", "items": { "$ref": "#/$defs/system" } },
+    "claims": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+    "figures": { "type": "array", "items": { "$ref": "#/$defs/figure" } },
+    "stories": { "type": "array", "items": { "$ref": "#/$defs/story" } },
+    "regimes": { "type": "array", "items": { "$ref": "#/$defs/regime" } },
+    "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+    "attestations": { "type": "array", "items": { "$ref": "#/$defs/attestation" } },
+    "records": { "type": "array", "items": { "$ref": "#/$defs/record" } },
+    "rejections": { "type": "array", "items": { "$ref": "#/$defs/rejection" } },
+    "open_questions": { "type": "array", "items": { "$ref": "#/$defs/open_question" } },
+    "positioning": { "$ref": "#/$defs/positioning" },
+    "disclosure_limits": { "type": "array", "items": { "$ref": "#/$defs/disclosure_limit" } },
+    "sessions": { "type": "array", "items": { "$ref": "#/$defs/session" } }
+  },
+
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]{2,4}\\.[a-z0-9][a-z0-9._-]*$",
+      "description": "Stable, human-readable id. Prefix by entity type: org. role. sys. clm. fig. sto. reg. ev. att. rec. rej. oq. ses."
+    },
+    "idref": { "$ref": "#/$defs/id" },
+    "ym": {
+      "type": "string",
+      "pattern": "^[0-9]{4}(-[0-9]{2})?$",
+      "description": "Year or year-month. Day precision is almost never sourceable and invites contradiction."
+    },
+    "date_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start"],
+      "properties": {
+        "start": { "$ref": "#/$defs/ym" },
+        "end": { "$ref": "#/$defs/ym" },
+        "ongoing": { "type": "boolean", "default": false },
+        "approximate": { "type": "boolean", "default": false }
+      }
+    },
+    "fact_type": {
+      "type": "string",
+      "description": "The kind of fact a piece of evidence can establish. Verification is per fact type, never per person.",
+      "enum": [
+        "employment.employer",
+        "employment.dates",
+        "employment.title",
+        "employment.compensation",
+        "employment.reporting_line",
+        "scope.headcount",
+        "scope.budget",
+        "scope.span",
+        "accomplishment.outcome",
+        "accomplishment.agency",
+        "accomplishment.authority",
+        "credential.held",
+        "credential.current",
+        "authorship.named",
+        "engagement.existed",
+        "engagement.value"
+      ]
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["T0", "T1", "T2", "T3", "T4"],
+      "description": "T0 asserted / T1 self-confirmed with a novel detail / T2 documented / T3 corroborated by a named person / T4 independent record. T1 is the floor for anything rendered."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["confirmed", "open", "rejected"],
+      "description": "Only 'confirmed' may be rendered. 'open' covers PARTIAL and DON'T RECALL. 'rejected' is permanent and drives DO-NOT-CLAIM."
+    },
+
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "credential_suffix": { "type": "string", "description": "e.g. MBA. Rendered in letterhead; suppressible per target." },
+        "location": { "type": "string" },
+        "contact": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "email": { "type": "string" },
+            "phone": { "type": "string" },
+            "linkedin": { "type": "string" },
+            "site": { "type": "string" }
+          }
+        },
+        "education": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["credential"],
+            "properties": {
+              "credential": { "type": "string" },
+              "institution": { "type": "string" },
+              "year": { "$ref": "#/$defs/ym" },
+              "verification": { "$ref": "#/$defs/verification" },
+              "suppress_for": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+
+    "org": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "public_name": { "type": "string", "description": "Use when the org may not be named directly; see disclosure_limits." },
+        "industry": { "type": "string" },
+        "size": { "type": "string", "description": "Headcount or revenue band at the time, not today." },
+        "buyer_types": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["enterprise", "government", "defense", "healthcare", "financial", "consumer", "education", "nonprofit"] }
+        },
+        "nameable": { "type": "boolean", "default": true, "description": "False when NDA or clearance forbids naming the org in renders." }
+      }
+    },
+
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "org_id", "title", "dates"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "org_id": { "$ref": "#/$defs/idref" },
+        "title": { "type": "string" },
+        "title_history": { "type": "array", "items": { "type": "string" }, "description": "Prior titles in the same role, for promotion narratives." },
+        "public_title": { "type": "string", "description": "Alternate title when the real one triggers a screen. Must remain truthful." },
+        "dates": { "$ref": "#/$defs/date_range" },
+        "location": { "type": "string", "description": "City, ST. Required by the autobiography chapter headings." },
+        "employment_type": { "type": "string", "enum": ["full_time", "part_time", "contract", "consulting", "fractional", "founder", "board", "advisory", "volunteer"] },
+        "concurrent": { "type": "boolean", "default": false, "description": "Overlaps another role. Must be disclosed as such in long-form documents." },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "direct_reports": { "type": "integer", "minimum": 0 },
+            "matrixed": { "type": "integer", "minimum": 0 },
+            "dotted_line": { "type": "integer", "minimum": 0 },
+            "total_org": { "type": "integer", "minimum": 0 },
+            "budget": { "$ref": "#/$defs/idref", "description": "figure id" },
+            "span": { "type": "string", "description": "Applications, products, regions, or business units owned." }
+          }
+        },
+        "chapter": {
+          "type": "string",
+          "description": "Autobiography-depth narrative for this role: the state it was in on arrival, what was inherited, the arc, what changed, and the capability it added. This is what the Career Autobiography renders from."
+        },
+        "departure_framing": { "type": "string", "description": "Agreed phrasing for why the role ended. Never rendered verbatim; guides tone." },
+        "verification": { "$ref": "#/$defs/verification" }
+      }
+    },
+
+    "system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "role_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" }, "description": "A system may span roles and even employers. This is why systems are first-class." },
+        "purpose": { "type": "string", "description": "What it did and for whom." },
+        "reconstruction": { "type": "string", "description": "Autobiography-depth technical narrative: architecture, data model, failure modes, what would break at 10x, what you would build differently." },
+        "data_classes": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["pii", "phi", "cardholder", "financial_records", "auth_material", "government", "minors", "biometric", "eu_resident", "ca_resident", "cui", "classified"] }
+        },
+        "deployment": { "type": "string", "enum": ["on_prem", "single_tenant", "multi_tenant_saas", "hybrid", "air_gapped", "authorized_cloud"] },
+        "money_movement": { "type": "string", "description": "Rails, if any: ACH, card, wire, RTP." },
+        "contractual_overlays": { "type": "array", "items": { "type": "string" }, "description": "Prime or sub on federal contract, BAA, DPA, customer security addenda, scheme rules." },
+        "seat": { "type": "string", "enum": ["builder", "architect", "owner", "accountable_executive"], "description": "Where the subject sat relative to this system." },
+        "regime_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "scale": { "type": "array", "items": { "$ref": "#/$defs/idref" }, "description": "figure ids: users, volume, data size, throughput." }
+      }
+    },
+
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "text"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "status": { "$ref": "#/$defs/status" },
+        "text": {
+          "type": "string",
+          "description": "Flat, neutral, no adjectives. This is the sentence sent to an attester -- never the polished bullet."
+        },
+        "narrative_long": {
+          "type": "string",
+          "description": "Autobiography depth: the situation, what was actually done, who else was in it, what it changed, in the subject's voice. Captured FIRST; everything shorter is derived from it."
+        },
+        "narrative_short": { "type": "string", "description": "Two or three sentences. KSA evidence paragraphs and LinkedIn render from here." },
+        "bullet": { "type": "string", "description": "Resume-length compression. Derived from narrative_long, never written first." },
+        "constraint": { "type": "string", "description": "The pressure that made this necessary: budget cut, headcount freeze, audit finding, regulatory gate, deadline. Achievements are framed by their constraint, not as transformation leadership." },
+        "role_id": { "$ref": "#/$defs/idref" },
+        "system_id": { "$ref": "#/$defs/idref" },
+        "regime_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "figure_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "evidence_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "story_id": { "$ref": "#/$defs/idref" },
+        "agency": {
+          "type": "string",
+          "enum": ["completed", "scoped", "enabled"],
+          "description": "Did it / scoped it and handed off / enabled a team to execute. Never allowed to drift upward."
+        },
+        "authority": {
+          "type": "string",
+          "enum": ["direct", "matrixed", "dotted_line", "vendor", "peer_influence", "none"],
+          "description": "Authority is not influence. Four different claims."
+        },
+        "dates": { "$ref": "#/$defs/date_range" },
+        "verification": { "$ref": "#/$defs/verification" },
+        "confirmed_detail": {
+          "type": "string",
+          "minLength": 12,
+          "description": "The particular the subject supplied that the scaffold did NOT contain: a person, a date, an artifact name, a number, a fight. Required for status=confirmed. This is what separates recognition from suggestion."
+        },
+        "job_families": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Families this claim legitimately supports, e.g. engineer, product_manager, delivery_program_manager, architect, engineering_leader, executive."
+        },
+        "suppress_for": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Targets where this claim hurts: executive scope on a hands-on IC search, P&L on an architect role. Resolves the Phase 6 / executive-letters tension as a filter instead of a rewrite."
+        },
+        "knowledge_currency": {
+          "type": "string",
+          "enum": ["current", "dated", "superseded"],
+          "description": "Computed against dates and regime revisions. A framework claim from 2016 is not a claim about the 2024 revision."
+        },
+        "disclosure_limit_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "source_session_id": { "$ref": "#/$defs/idref" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "confirmed" } }, "required": ["status"] },
+          "then": { "required": ["confirmed_detail", "agency", "narrative_long"] }
+        }
+      ]
+    },
+
+    "figure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "value", "unit", "sourceable"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "value": { "type": "number" },
+        "unit": { "type": "string", "description": "USD, USD_millions, people, percent, months, transactions, TB, requests_per_second." },
+        "kind": { "type": "string", "description": "What the number measures: investment_secured, cost_removed, headcount, uptime, cycle_time." },
+        "baseline": { "type": "string", "description": "What it was before. A number without a baseline is decoration." },
+        "window": { "type": "string", "description": "The period the number covers." },
+        "instrument": { "type": "string", "description": "How it was measured, and by what system." },
+        "source": { "type": "string", "description": "Where it can be produced from: board deck, audit report, finance system, contract." },
+        "sourceable": {
+          "type": "boolean",
+          "description": "Can the subject actually produce the source today? Unsourceable numbers are omitted, never softened."
+        },
+        "witnessed_by": { "type": "array", "items": { "type": "string" }, "description": "Who else saw this number." },
+        "composite_of": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/idref" },
+          "description": "Components of a composite headline figure. Must decompose cleanly; the validator checks the arithmetic."
+        },
+        "verification": { "$ref": "#/$defs/verification" },
+        "headline": { "type": "boolean", "default": false, "description": "One of the 4 to 6 numbers that carry the story and appear in the first 25% of a document." }
+      }
+    },
+
+    "story": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string" },
+        "role_id": { "$ref": "#/$defs/idref" },
+        "system_id": { "$ref": "#/$defs/idref" },
+        "constraint": { "type": "string" },
+        "before_state": { "type": "string", "description": "In terms a skeptic could picture." },
+        "personal_action": { "type": "string", "description": "What the subject personally did, distinct from the team, a vendor, or a predecessor." },
+        "decision": { "type": "string", "description": "The call a competent peer might have made differently." },
+        "result": { "type": "string" },
+        "tradeoff": { "type": "string", "description": "What was accepted, deferred, or risk-accepted, and by whom." },
+        "what_went_wrong": { "type": "string", "description": "What failed or was left undone. Its absence is what makes an answer sound rehearsed." },
+        "contradiction_risk": { "type": "string", "description": "Who could contradict this account and what they would say. Interview preparation depends on this field." },
+        "figure_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "claim_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "spoken_90s": { "type": "string", "description": "Rendered interview answer, in the subject's voice, built only from confirmed material." },
+        "question_targets": { "type": "array", "items": { "type": "string" }, "description": "Interview questions this story answers." }
+      }
+    },
+
+    "regime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "status": { "$ref": "#/$defs/status" },
+        "why_attached": { "type": "string", "description": "The one-line reason it applied given the system described." },
+        "observable": { "type": "string", "description": "The artifact, auditor, gate, clause, or recurring meeting that confirms it." },
+        "accountability": { "type": "string", "enum": ["accountable", "contributing", "adjacent", "present"], "description": "Four different claims. Never collapse them." },
+        "cadence": { "type": "string", "enum": ["one_time", "annual", "continuous", "event_driven"] },
+        "revision_known": { "type": "string", "description": "Which revision of the framework the subject actually worked under." },
+        "adjacent_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" }, "description": "Regimes sharing evidence, control work, or calendar. Populated from data/adjacency.json." }
+      }
+    },
+
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "type": "string", "enum": ["artifact", "witness", "system_access", "public_record"] },
+        "description": { "type": "string" },
+        "producible": { "type": "boolean", "description": "Can the subject actually retrieve this today?" },
+        "location": { "type": "string", "description": "Where it lives, if retrievable." },
+        "establishes": { "type": "array", "items": { "$ref": "#/$defs/fact_type" } }
+      }
+    },
+
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim_ids", "attester", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "claim_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/idref" },
+          "description": "Request narrow. Broad attestation requests go unanswered and are worth less when answered."
+        },
+        "attester": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "relationship"],
+          "properties": {
+            "name": { "type": "string" },
+            "relationship": { "type": "string", "enum": ["manager", "skip_manager", "peer", "direct_report", "customer", "auditor", "vendor", "board", "investor", "partner"] },
+            "org_id": { "$ref": "#/$defs/idref" },
+            "title_at_time": { "type": "string" },
+            "contact_ref": { "type": "string", "description": "Reference or hash, not a raw address in the corpus." }
+          }
+        },
+        "scope": { "type": "string", "description": "What this person can actually speak to. Attesting outside scope is worth nothing." },
+        "strength": {
+          "type": "string",
+          "enum": ["witnessed", "participated", "hearsay"],
+          "description": "Hearsay never raises a tier. It is recorded for reference planning."
+        },
+        "statement": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "requested", "viewed", "received", "declined", "expired"] },
+        "establishes": { "type": "array", "items": { "$ref": "#/$defs/fact_type" } },
+        "requested_at": { "type": "string" },
+        "received_at": { "type": "string" },
+        "expires_at": { "type": "string" }
+      }
+    },
+
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "verifies"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": {
+          "type": "string",
+          "enum": ["irs_wage_transcript", "w2", "1099", "payroll", "offer_letter", "org_chart", "state_registry", "dd214", "license", "clearance", "certification", "patent", "publication", "sec_filing", "contract_award", "sam_registration"]
+        },
+        "verifies": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/fact_type" },
+          "description": "The fact types this record actually establishes. An IRS transcript verifies employer, dates and compensation -- never accomplishments. The validator enforces this."
+        },
+        "covers_role_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "covers_claim_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "issuer": { "type": "string" },
+        "period": { "type": "string" },
+        "document_ref": { "type": "string", "description": "Pointer into a secure store. The document itself never lives in the corpus." },
+        "hash": { "type": "string" },
+        "obtained_at": { "type": "string" },
+        "sensitivity": { "type": "string", "enum": ["public", "internal", "restricted"], "default": "restricted" },
+        "conflicts": { "type": "array", "items": { "type": "string" }, "description": "Where this record disagrees with stated history. Produces an open question, never a silent overwrite." }
+      }
+    },
+
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier"],
+      "properties": {
+        "tier": { "$ref": "#/$defs/tier" },
+        "by_fact_type": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/tier" },
+          "propertyNames": { "$ref": "#/$defs/fact_type" },
+          "description": "Per-fact-type tiers. The top-level tier is the MINIMUM across these, never the maximum -- a claim is only as verified as its weakest rendered component."
+        },
+        "attestation_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "record_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "evidence_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "last_reviewed": { "$ref": "#/$defs/ym" }
+      }
+    },
+
+    "rejection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "reason"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "text": { "type": "string", "description": "The candidate that was rejected, kept verbatim so it is never re-proposed." },
+        "reason": { "type": "string", "enum": ["not_true", "not_mine", "unsourceable", "vague_recall_only", "disclosure_limited", "would_mislead"] },
+        "detail": { "type": "string" },
+        "rejected_at": { "$ref": "#/$defs/ym" },
+        "session_id": { "$ref": "#/$defs/idref" }
+      }
+    },
+
+    "open_question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "question", "close_action"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "question": { "type": "string" },
+        "kind": { "type": "string", "enum": ["partial", "dont_recall", "unsourceable_figure", "date_conflict", "attribution_unclear"] },
+        "close_action": {
+          "type": "string",
+          "description": "The specific thing that would close it: a document to find, a person to ask, a system still accessible. Not 'think about it more'."
+        },
+        "blocks_claim_ids": { "type": "array", "items": { "$ref": "#/$defs/idref" } },
+        "payoff": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+
+    "positioning": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key"],
+            "properties": {
+              "key": { "type": "string", "description": "e.g. architect_director, ic_staff_engineer, cto." },
+              "job_family": { "type": "string" },
+              "seniority": { "type": "string", "enum": ["ic", "manager", "director", "vp_plus"] },
+              "tagline": { "type": "string", "description": "One positioning line for letterhead. Never list three titles." },
+              "carries": { "type": "array", "items": { "$ref": "#/$defs/idref" }, "description": "The two or three claim ids that carry the case." },
+              "suppress": { "type": "array", "items": { "$ref": "#/$defs/idref" }, "description": "Claims that become noise or trigger an overqualification screen." },
+              "objection": { "type": "string", "description": "The obvious objection a hiring manager raises." },
+              "objection_answer": { "type": "string", "description": "The honest answer, not spin." },
+              "fit": { "type": "string", "enum": ["strong", "moderate", "thin"], "description": "Say so plainly when the fit is thin." }
+            }
+          }
+        }
+      }
+    },
+
+    "disclosure_limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "scope"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "type": "string", "enum": ["nda", "classified", "cui", "customer_name", "unreleased_product", "litigation", "personal_preference"] },
+        "scope": { "type": "string", "description": "What specifically cannot be said." },
+        "workaround": { "type": "string", "description": "The generic phrasing that is permitted, e.g. 'a federal civilian agency' instead of the agency name." },
+        "expires": { "$ref": "#/$defs/ym" }
+      }
+    },
+
+    "session": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "date"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "date": { "$ref": "#/$defs/ym" },
+        "subject": { "type": "string", "description": "The system, program, role, or claim set interrogated." },
+        "variant": { "type": "string", "enum": ["system_reconstruction", "compliance_sweep", "claim_audit", "interview_drill", "positioning_pass", "autobiography_pass"] },
+        "track": { "type": "string", "enum": ["engineer", "product_manager", "delivery_program_manager", "architect", "engineering_leader"] },
+        "next_scaffold": { "type": "array", "items": { "type": "string" }, "description": "Branches not yet walked, ranked by likely payoff." }
+      }
+    }
+  }
+}

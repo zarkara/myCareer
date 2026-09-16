@@ -1,6 +1,9 @@
 'use strict';
 /**
- * Packages share/mycareer/ into mycareer.zip for upload to Claude.
+ * Packages a share/ subfolder into a zip.
+ *
+ *   node share/make_zip.js            mycareer.zip, the Claude skill
+ *   node share/make_zip.js chatgpt    mycareer-chatgpt.zip, the ChatGPT project files
  *
  *   node share/make_zip.js
  *
@@ -12,8 +15,10 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const root = path.join(__dirname, 'mycareer');
-const dest = path.join(__dirname, 'mycareer.zip');
+const which = process.argv[2] || 'mycareer';
+const root = path.join(__dirname, which);
+const dest = path.join(__dirname, which === 'chatgpt' ? 'mycareer-chatgpt.zip' : 'mycareer.zip');
+const topLevel = which === 'chatgpt' ? 'mycareer-chatgpt' : 'mycareer';
 
 const CRC = (() => {
   const t = new Int32Array(256);
@@ -45,7 +50,7 @@ function walk(dir, base = '') {
 const DOS_TIME = 0;           // 00:00:00
 const DOS_DATE = (2026 - 1980) << 9 | (1 << 5) | 1;   // 2026-01-01
 
-const files = walk(root).map((f) => ({ ...f, rel: `mycareer/${f.rel}` }));
+const files = walk(root).map((f) => ({ ...f, rel: `${topLevel}/${f.rel}` }));
 if (!files.length) throw new Error(`nothing to package in ${root}`);
 
 const locals = [];
