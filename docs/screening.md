@@ -120,39 +120,7 @@ product is theatre and candidates will work that out within a month. The saving 
 self-selection: a 40-minute interrogation is a costly signal, so only people who genuinely
 believe the filter is wrong will do it. Volume stays low enough to honour.
 
-**Who pays for the deep dive.** The candidate can, and there is a good argument that they
-should, but only if it is priced and framed as **buying an asset they keep**.
-
-The deep dive costs real compute, on the order of a couple of dollars. Charging for it does
-three useful things at once:
-
-- **It is a costly signal.** Paying filters out speculative applicants more effectively than any
-  algorithm, and it is what makes the appeal credible. An appeal that costs nothing is worth
-  nothing, and employers will treat it accordingly.
-- **It keeps ownership with the candidate.** Whoever pays has a claim on the output. If the
-  employer funds the interrogation, the employer is commissioning an assessment of a person.
-  If the candidate funds it, they own a record they can send to anyone, forever.
-- **It removes the two-sided adoption problem.** No employer has to sign anything for a
-  candidate to produce a deep dive and attach it to an application.
-
-Two rules keep this from becoming pay-to-be-seen, and both are load-bearing:
-
-1. **It is charged once, not per application.** The corpus is durable. The second application
-   costs nothing, the twentieth costs nothing. This is the difference between buying a tool and
-   paying a toll at every door, and it has to be obvious on the pricing page.
-2. **There is always a free path.** The interrogation runs on the candidate's own Claude or
-   ChatGPT subscription, or entirely on-device through Apple's Foundation Models, at no
-   marginal cost to anyone. The fee buys convenience and a hosted run, never access. Nobody
-   is ever required to pay to be considered, and saying so plainly is part of the product.
-
-Framed that way the sentence is "three dollars for a verified career record you own and reuse,"
-not "three dollars to have your application read." The first is a tool. The second would poison
-the positioning, and in some US states fee-charging employment agencies are separately
-regulated, so the distinction is worth getting right with counsel before any money moves.
-
-Employer-sponsored codes are the obvious release valve: an employer who wants the signal on
-candidates their filter was about to lose can cover it, which costs them far less than the
-acquisition they already paid for.
+**Who pays for the deep dive.** The candidate can, and probably should, but the fee has to buy **a record they own**, never access to an employer's decision. That distinction is not branding: California exempts résumé preparation from employment agency rules only while you do not hold yourself out as offering job-seeking or placement services. "Pay to appeal this rejection" fails that test; "build your record, attach it to anything" passes it, for the same money and the same button. Charge once at record creation, never per application, and promise no outcome at all. See [pricing.md](pricing.md).
 
 **This could become a better filter rather than a better process.** Richer signal in a rejection
 machine is not progress. What prevents it is that the candidate generates the projection,

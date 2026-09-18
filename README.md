@@ -121,7 +121,9 @@ record says SOC 2, and reports that it did so because the two share twelve evide
 one programme produces the evidence for both. Every match cites the claim, the reason, and the
 verification tier, and the report names what the record does **not** evidence. There is no score.
 
-See [docs/recruiter.md](docs/recruiter.md).
+See [docs/recruiter.md](docs/recruiter.md) for the projection and matching design,
+[docs/screening.md](docs/screening.md) for replacing one-way AI screeners, and
+[docs/pricing.md](docs/pricing.md) for what can be charged and for what.
 
 ## iOS app
 
