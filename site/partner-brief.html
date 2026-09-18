@@ -1,0 +1,253 @@
+<title>myCareer Partner Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  :root {
+    --paper:     #f7f6f3;
+    --surface:   #ffffff;
+    --ink:       #16202e;
+    --ink-soft:  #4d5a68;
+    --ink-faint: #8b95a1;
+    --navy:      #1f3864;
+    --blue:      #2e74b5;
+    --gold:      #b8801f;
+    --rule:      #ddd8ce;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #101720; --surface: #18212c; --ink: #e8eaed; --ink-soft: #aab4c0;
+      --ink-faint: #6f7c8a; --navy: #a8c4e8; --blue: #74a8dd; --gold: #e0ac4a; --rule: #2b3644;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101720; --surface: #18212c; --ink: #e8eaed; --ink-soft: #aab4c0;
+    --ink-faint: #6f7c8a; --navy: #a8c4e8; --blue: #74a8dd; --gold: #e0ac4a; --rule: #2b3644;
+  }
+
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans);
+         font-size: 15px; line-height: 1.52; -webkit-font-smoothing: antialiased; }
+  .sheet { max-width: 50rem; margin: 0 auto; padding-inline: 24px; padding-block: 40px 56px;
+           display: flex; flex-direction: column; gap: 26px; }
+
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+             text-transform: uppercase; color: var(--gold); margin: 0; }
+  h1 { font-family: var(--serif); font-size: clamp(1.8rem, 4.6vw, 2.4rem); line-height: 1.14;
+       font-weight: 600; letter-spacing: -.012em; text-wrap: balance; margin: 10px 0 0; }
+  h2 { font-family: var(--serif); font-size: 1.22rem; font-weight: 600; margin: 0 0 8px;
+       text-wrap: balance; }
+  h3 { font-size: 14px; font-weight: 600; margin: 0 0 3px; }
+  p { margin: 0 0 12px; max-width: 64ch; }
+  p:last-child { margin-bottom: 0; }
+  .lede { font-size: 17px; color: var(--ink-soft); margin-top: 14px; }
+  .soft { color: var(--ink-soft); }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+
+  /* The finding the whole pitch rests on. */
+  .finding { border-left: 3px solid var(--gold); padding: 2px 0 2px 18px; }
+  .finding .big { font-family: var(--serif); font-size: 2.1rem; font-weight: 600;
+                  line-height: 1.1; color: var(--navy); display: block; }
+  .finding p { margin: 6px 0 0; font-size: 14.5px; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-top: 3px solid var(--navy);
+          padding: 18px 18px 16px; }
+  .card.paid { border-top-color: var(--gold); }
+  .card .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+               text-transform: uppercase; color: var(--ink-faint); }
+  .card h2 { font-size: 1.05rem; margin: 4px 0 8px; }
+  .card p { font-size: 14px; }
+  .card ul { margin: 8px 0 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-soft); }
+  .card li { margin-bottom: 4px; }
+
+  .rows { display: flex; flex-direction: column; gap: 14px; }
+  .row { display: grid; grid-template-columns: 1.5rem 1fr; gap: 0 14px; }
+  .row .mark { font-family: var(--mono); font-size: 12px; color: var(--gold); padding-top: 2px; }
+  .row p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+  .band { display: flex; flex-wrap: wrap; gap: 26px; padding: 14px 0;
+          border-block: 1px solid var(--rule); }
+  .stat { flex: 1 1 8rem; }
+  .stat b { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--navy);
+            display: block; line-height: 1.1; }
+  .stat span { font-size: 12.5px; color: var(--ink-faint); }
+
+  .ladder { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--rule); }
+  .rung { display: grid; grid-template-columns: 7.5rem 1fr; gap: 16px; padding: 13px 16px;
+          border-bottom: 1px solid var(--rule); }
+  .rung:last-child { border-bottom: 0; }
+  .rung .lvl { font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
+               text-transform: uppercase; color: var(--gold); padding-top: 2px; }
+  .rung p { font-size: 13.5px; margin: 3px 0 0; color: var(--ink-soft); }
+
+  .ask { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--gold);
+         padding: 18px 20px; }
+  footer { font-size: 12.5px; color: var(--ink-faint); border-top: 1px solid var(--rule);
+           padding-top: 16px; }
+  a { color: var(--blue); text-underline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .cols { grid-template-columns: 1fr; }
+    .rung { grid-template-columns: 1fr; gap: 2px; }
+  }
+  @media print {
+    body { background: #fff; color: #000; font-size: 10.5pt; }
+    .sheet { max-width: none; padding: 0; gap: 16px; }
+    .card, .ask { break-inside: avoid; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header>
+    <p class="eyebrow">Partner brief &middot; September 2026</p>
+    <h1>Half your applicants never finish the screen. It is not a random half.</h1>
+    <p class="lede">myCareer is a candidate-side career record with verified provenance. It gives
+      you evidence about the people your funnel is currently losing, and it does it without adding
+      a scoring tool to your stack.</p>
+  </header>
+
+  <div class="finding">
+    <span class="big">&minus;50%</span>
+    <p>A 2026 randomised field experiment across interview formats found one-way asynchronous
+      screens caused an over 50% drop in application continuation, <strong>steepest among women
+      and the most qualified candidates</strong>. The same body of research finds AI screening
+      performs well on those who complete it: roughly 12% more offers and 18% more starts. The
+      instrument is not the problem. The abandonment is.</p>
+  </div>
+
+  <section>
+    <h2>Everyone you lose there is someone you already paid to acquire</h2>
+    <p class="soft">They applied. They were sourced, marketed to, or referred. Then they hit a
+      webcam and a fixed question list, and the ones with options walked. You carry the
+      acquisition cost and get nothing, and the loss is concentrated in exactly the segment your
+      hiring managers complain they cannot find.</p>
+  </section>
+
+  <div class="cols">
+    <div class="card">
+      <span class="tag">Free &middot; published &middot; candidate-side</span>
+      <h2>The record</h2>
+      <p>An interview that reconstructs what someone actually did, then produces a verified
+        record they own. Free, runs on the candidate's own AI subscription or on their device,
+        and needs nothing from you.</p>
+      <ul>
+        <li>Claude skill and ChatGPT project package</li>
+        <li>Browser extension that reads a posting and matches it</li>
+        <li>iPhone app for long-form capture, no network code</li>
+        <li>Command-line renderers for r&eacute;sum&eacute;, profile and letters</li>
+      </ul>
+    </div>
+    <div class="card paid">
+      <span class="tag">Hosted &middot; paid once by the candidate</span>
+      <h2>The deep dive</h2>
+      <p>When a candidate believes a filter has them wrong, they pay a few dollars once for a
+        guided interrogation of exactly the requirements their record failed to evidence. They
+        keep the record and reuse it for every future application.</p>
+      <ul>
+        <li>Scoped by the gap report, not a generic question list</li>
+        <li>Produces an evidence packet a human reads</li>
+        <li>Charged at record creation, never per application</li>
+        <li>No outcome is promised, ever</li>
+      </ul>
+    </div>
+  </div>
+
+  <section>
+    <h2>What you receive is evidence, not a score</h2>
+    <div class="rows">
+      <div class="row"><span class="mark">01</span><div>
+        <h3>Did it, scoped it, or enabled it</h3>
+        <p>Every claim records whether the person did the work, scoped it and handed it off, or
+          enabled a team to do it. On a r&eacute;sum&eacute; those are the same sentence.</p>
+      </div></div>
+      <div class="row"><span class="mark">02</span><div>
+        <h3>Numbers with a baseline and a source</h3>
+        <p>Each figure carries what it measures, what it was before, and whether the candidate can
+          still produce the source. Anything unsourceable is omitted rather than softened.</p>
+      </div></div>
+      <div class="row"><span class="mark">03</span><div>
+        <h3>Equivalence, so you stop missing people</h3>
+        <p>A requirement for ISO&nbsp;27001 surfaces the candidate whose record says SOC&nbsp;2, and
+          says why: the two share twelve evidence clusters, and one programme produces the evidence
+          for both. Keyword search drops that person silently.</p>
+      </div></div>
+      <div class="row"><span class="mark">04</span><div>
+        <h3>An explicit list of what is not evidenced</h3>
+        <p>The report names the gaps and what to ask about them. A tool that only reports matches
+          is a tool that flatters.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="stat"><b>33</b><span>regulatory regimes mapped</span></div>
+    <div class="stat"><b>20</b><span>shared evidence clusters</span></div>
+    <div class="stat"><b>5</b><span>verification tiers, per fact type</span></div>
+    <div class="stat"><b>0</b><span>scores or rankings produced</span></div>
+  </div>
+
+  <section>
+    <h2>It does not add a compliance obligation to your stack</h2>
+    <p class="soft">This is deliberate and it is enforced in the code. NYC Local Law 144 attaches
+      to automated employment decision tools that <strong>screen or rank</strong> candidates:
+      annual independent bias audit, published results, ten days' notice, and the obligation sits
+      with the employer using the tool. The EU AI Act treats employment AI as high risk with
+      obligations from December 2027.</p>
+    <p class="soft">myCareer produces <strong>evidence for a person to read</strong>. It emits no
+      fit percentage and sorts no candidate list, so it is not the regulated thing, and it happens
+      to supply what those regimes ask for anyway: explanation, human oversight, and a route for a
+      candidate to contest an outcome. If you ask us for a score, the answer is no.</p>
+  </section>
+
+  <section>
+    <h2>Three ways to work together, smallest first</h2>
+    <div class="ladder">
+      <div class="rung">
+        <span class="lvl">No build</span>
+        <div><h3>Accept the packet</h3>
+          <p>Tell candidates a myCareer record may be attached to an application, and read the ones
+            that arrive. Costs nothing, needs no integration, and tests whether the evidence is
+            worth your recruiters' time.</p></div>
+      </div>
+      <div class="rung">
+        <span class="lvl">Light</span>
+        <div><h3>Offer it at the rejection</h3>
+          <p>Candidates your filter declines get told what was not evidenced and can appeal with
+            evidence. Self-selection keeps the volume low: a forty minute interrogation is a costly
+            signal, so only people who genuinely believe you have them wrong will do it.</p></div>
+      </div>
+      <div class="rung">
+        <span class="lvl">Integrated</span>
+        <div><h3>In your ATS or careers site</h3>
+          <p>Requirements in, evidence packet out, alongside the application. Postings are already
+            read from schema.org job markup, so the pipe is short. This is the stage that needs a
+            partner, which is why we are talking.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ask">
+    <h2>What we are asking for</h2>
+    <p><strong>A pilot on one requisition family</strong>, ideally somewhere with compliance or
+      regulatory weight, where you already suspect the filter is losing people. We want to learn
+      two things: whether recruiters find the packet worth reading, and whether the candidates it
+      surfaces are ones you would otherwise have missed.</p>
+    <p class="soft">Nothing is asked of your engineering team for the first two rungs. Candidate
+      data stays with the candidate: they generate what is shared and can read exactly what it says.
+      Transcripts are not retained.</p>
+  </section>
+
+  <footer>
+    <p>Built and running: interrogation protocol, corpus schema and validator, r&eacute;sum&eacute;
+      and profile renderers, browser extension, iPhone app, and the hosted service with accounts and
+      payment. Source published at <strong>github.com/zarkara/myCareer</strong>.</p>
+    <p>The interview is harder to game than a r&eacute;sum&eacute; or a one-way screen, because an
+      LLM will make anyone sound fluent but will not supply the name of the person they argued with
+      about log retention. Fluency is cheap now. Provenance is not.</p>
+  </footer>
+
+</div>
