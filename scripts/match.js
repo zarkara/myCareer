@@ -140,7 +140,26 @@ function matchRequirement(requirement, view) {
   };
 }
 
-const humanCluster = (k) => (adjacency.evidence_clusters[k] || k).split(',')[0].toLowerCase();
+// The cluster descriptions are written as lists, so taking the first comma-segment gives
+// things like "ir plan". The key itself reads better; a few need a real name.
+const CLUSTER_LABEL = {
+  bcdr: 'backup and disaster recovery',
+  crypto_key_mgmt: 'encryption and key management',
+  pen_test: 'penetration testing',
+  awareness_training: 'security awareness training',
+  incident_response: 'incident response',
+  control_narratives: 'written control narratives',
+  continuous_monitoring: 'continuous monitoring',
+  customer_security_review: 'customer security questionnaires',
+  validation_qualification: 'validation and qualification',
+  retention_deletion: 'retention and deletion',
+  subject_rights: 'data subject rights',
+  data_flow_mapping: 'data flow mapping',
+  asset_inventory: 'asset inventory',
+  policy_governance: 'policy governance',
+  accessibility_testing: 'accessibility testing',
+};
+const humanCluster = (k) => CLUSTER_LABEL[k] || k.replace(/_/g, ' ');
 
 const TIER_LABEL = {
   T0: 'asserted', T1: 'confirmed with a specific recollection', T2: 'documented',
@@ -254,4 +273,4 @@ if (require.main === module) {
   console.log(report(view, requirements));
 }
 
-module.exports = { matchRequirement, equivalents, resolveRegime, similarity, report };
+module.exports = { matchRequirement, equivalents, resolveRegime, similarity, humanCluster, report };
