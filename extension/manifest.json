@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "myCareer",
+  "version": "0.1.0",
+  "description": "Read a job posting against your verified career record. See what it evidences, what it does not, and why.",
+  "permissions": ["activeTab", "scripting", "storage", "sidePanel"],
+  "action": { "default_title": "myCareer: read this posting" },
+  "side_panel": { "default_path": "panel.html" },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "icons": { "128": "icon-128.png" }
+}

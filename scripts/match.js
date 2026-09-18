@@ -42,11 +42,28 @@ function similarity(a, b) {
   return shared / Math.max(A.size, B.size);
 }
 
+/**
+ * Does a requirement line MENTION a regime? Requirement text carries trailing words a
+ * canonical name does not: "ISO 27001 audits and certification" against "ISO/IEC 27001".
+ * Token-set equality fails there, so also measure how much of the regime NAME the
+ * requirement covers, and demand at least one distinctive token so that a shared "the"
+ * or a lone "2" cannot carry a match on its own.
+ */
+const DISTINCTIVE = (t) => t.length >= 4 || /[0-9]/.test(t);
+function mentions(requirement, name) {
+  const R = tokens(requirement), N = tokens(name);
+  if (!R.size || !N.size) return 0;
+  const shared = [...N].filter((t) => R.has(t));
+  if (!shared.some(DISTINCTIVE)) return 0;
+  const coverage = shared.length / N.size;
+  return coverage >= 0.5 ? coverage : 0;
+}
+
 /** Find the regime a requirement names, preferring the closest fit rather than the longest. */
 function resolveRegime(requirement) {
   let best = null, bestScore = 0;
   for (const r of REGIMES) {
-    const score = similarity(requirement, r.name);
+    const score = Math.max(similarity(requirement, r.name), mentions(requirement, r.name));
     if (score > bestScore) { best = r; bestScore = score; }
   }
   return best;

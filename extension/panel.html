@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>myCareer</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <header>
+    <h1>myCareer</h1>
+    <p class="sub" id="recordLine">No record loaded</p>
+  </header>
+
+  <section id="setup">
+    <p>Load the record you built with the interrogation. It stays on this machine and is never
+       sent anywhere.</p>
+    <label class="file">
+      <input type="file" id="recordFile" accept="application/json">
+      <span>Load my record</span>
+    </label>
+    <p class="fine">Use a recruiter view, or a full corpus and it will be projected here. Your
+       contradiction notes, do-not-claim list, and reference contacts are never read.</p>
+  </section>
+
+  <section id="actions" hidden>
+    <button id="read" class="primary">Read this posting</button>
+    <p class="fine">Reads only the page you are on, only when you click. Nothing is submitted
+       and no application is ever sent for you.</p>
+  </section>
+
+  <section id="result" hidden>
+    <div id="posting"></div>
+    <div id="summary" class="summary"></div>
+    <div id="requirements"></div>
+    <div class="downloads">
+      <button id="dlResume">Download a resume for this posting</button>
+      <button id="dlBrief">Download the deep dive brief</button>
+    </div>
+    <p class="fine">The resume selects from claims you confirmed. It never rewords one to match
+       this posting, and it states at the bottom what your record does not evidence.</p>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+  <script type="module" src="panel.js"></script>
+</body>
+</html>

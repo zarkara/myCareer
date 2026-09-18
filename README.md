@@ -125,6 +125,19 @@ See [docs/recruiter.md](docs/recruiter.md) for the projection and matching desig
 [docs/screening.md](docs/screening.md) for replacing one-way AI screeners, and
 [docs/pricing.md](docs/pricing.md) for what can be charged and for what.
 
+## Browser extension
+
+`extension/` reads the job posting on whatever page you are looking at, matches it against
+your record, and offers a resume built only from claims you confirmed. Candidate-side, so it
+needs permission from no job board. `activeTab` only, no host permissions, no server: it
+cannot read a page you did not click the button on.
+
+It never auto-applies. Mass application is the cheapest possible signal and is what produced
+the keyword filters this project exists to replace.
+
+Postings are read from schema.org `JobPosting` structured data first, which survives site
+redesigns in a way CSS selectors do not. See [extension/README.md](extension/README.md).
+
 ## iOS app
 
 `ios/` holds a companion iPhone app: a career autobiography written long-form with the
