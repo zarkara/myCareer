@@ -1,0 +1,20 @@
+name = "mycareer-service"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Created by: wrangler d1 create mycareer
+# Paste the printed database_id here. It is not a secret.
+[[d1_databases]]
+binding = "DB"
+database_name = "mycareer"
+database_id = "PASTE_AFTER_d1_create"
+
+[vars]
+# Public, non-secret configuration. Secrets go through `wrangler secret put`,
+# never here: this file is committed.
+PRICE_USD_CENTS = "700"
+CREDITS_PER_PURCHASE = "1"
+MODEL = "claude-opus-5"
+MAX_TOKENS_PER_TURN = "8000"
+MAX_TURNS_PER_SESSION = "120"
+DAILY_SESSION_CAP = "3"

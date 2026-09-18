@@ -19,3 +19,7 @@ share/mycareer.zip
 ios/MyCareer.xcodeproj/
 ios/build/
 .DS_Store
+
+# Service secrets. The example file is committed; the real one never is.
+service/.dev.vars
+service/.wrangler/

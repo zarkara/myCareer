@@ -1,0 +1,13 @@
+{
+  "name": "mycareer-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node test/service.test.mjs",
+    "db:local": "wrangler d1 execute mycareer --local --file=schema.sql",
+    "db:remote": "wrangler d1 execute mycareer --remote --file=schema.sql"
+  },
+  "devDependencies": { "wrangler": "^4" }
+}

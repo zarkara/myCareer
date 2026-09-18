@@ -126,6 +126,20 @@ See [docs/unit-economics.md](docs/unit-economics.md) for what hosted inference c
 [docs/screening.md](docs/screening.md) for replacing one-way AI screeners, and
 [docs/pricing.md](docs/pricing.md) for what can be charged and for what.
 
+## Hosted service
+
+`service/` is one Cloudflare Worker and one D1 database: accounts, Stripe payment, and the
+inference proxy. `npx wrangler deploy`, no containers.
+
+**The Anthropic key never leaves the Worker.** Not baked into a client and not handed to one
+at runtime: a key that reaches a device can be read out of memory or off the wire. Clients
+authenticate with their own bearer token and post conversation turns; the service owns the
+system prompt, calls Anthropic, streams the answer back, and records what it cost.
+
+The protocol is served as a single cached system block generated from the same instruction
+text the Claude skill and the ChatGPT project use, because caching is the difference between
+a $1.87 session and a $10 one. See [service/README.md](service/README.md).
+
 ## Browser extension
 
 `extension/` reads the job posting on whatever page you are looking at, matches it against

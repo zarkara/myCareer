@@ -7,12 +7,13 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "node ios/Tests/harness/run.js && node extension/test/extract.test.mjs && node extension/test/crosscheck.mjs",
+    "test": "node ios/Tests/harness/run.js && node extension/test/extract.test.mjs && node extension/test/crosscheck.mjs && node service/test/service.test.mjs",
     "test:update": "node ios/Tests/harness/run.js --update",
     "icon": "node store/make_icon.js",
     "validate": "node scripts/validate_corpus.js schema/mycareer.example.json",
     "demo": "node scripts/build_letters.js schema/mycareer.example.json architect_director out && node scripts/docx_text.js --write out/*.docx && node scripts/validate_corpus.js schema/mycareer.example.json out/*.txt",
-    "test:ios": "node ios/Tests/harness/run.js"
+    "test:ios": "node ios/Tests/harness/run.js",
+    "build:protocol": "node scripts/build_protocol.js"
   },
   "keywords": [],
   "author": "",
